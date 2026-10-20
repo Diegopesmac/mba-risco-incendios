@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "path": "4",
+  "repository_visibility": "private",
+  "deliveries": {
+    "entrega0": {
+      "status": "preparation",
+      "approval": "pending"
+    },
+    "entrega1": {
+      "status": "not_submitted"
+    },
+    "entrega2": {
+      "status": "not_started"
+    }
+  },
+  "api_deploy": "planned",
+  "public_release": "not_authorized"
+}
