@@ -1,0 +1,25 @@
+# Project data, dependencies and local executions
+
+.local/
+.deps_queimadas/
+.venv/
+__pycache__/
+*.py[cod]
+.env
+.env.*
+!.env.example
+.pytest_cache/
+.ipynb_checkpoints/
+dados_brutos_queimadas/
+auditoria_queimadas/
+eda_queimadas/
+data/
+models/
+outputs/
+*.csv
+*.parquet
+*.duckdb*
+*.sqlite*
+*.zip
+*.pkl
+*.joblib
