@@ -25,6 +25,7 @@ Python 3.12. A partir da raiz:
 python -m pip install -r requirements.txt
 python -m pip install -e . --no-deps
 python scripts/prepare_candidate.py --years 2023 2024 2025
+python scripts/diagnose_regions.py
 python scripts/build_entrega0.py
 python -m unittest discover -s tests -v
 python -m unittest test_preparacao_queimadas -v
@@ -32,6 +33,8 @@ python scripts/check_publication.py
 ```
 
 Os dados reais ficam em `.local/`, fora do Git. O download candidato tem cerca de 24 MB compactados. O notebook executado da Entrega 0 fica em `.local/deliveries/`; o modelo de notebook versionado fica em `notebooks/`. Não é necessário autenticar no INPE para os arquivos anuais selecionados.
+
+O diagnóstico regional produz `state-days.csv` e `state-days-summary.json` em `.local/candidates/`, conciliando os hashes e o total de detecções com o manifesto. Inclui todas as 27 UFs e todos os dias dos anos auditados. Contagens sem registro ficam vazias; cobertura permanece não comprovada e nenhum alvo é criado. Consulte o [guia do diagnóstico regional](docs/regional-diagnostic.md) antes de interpretar os resultados.
 
 As quatro rotinas na raiz e `notebooks/course/` preservam o trabalho anterior com os arquivos oferecidos pelo curso. Para reproduzir essa análise, disponibilizar os quatro CSVs em `dados_brutos_queimadas/`; esses CSVs e os resultados não são incluídos no Git. Os notebooks versionados estão sem saídas; as execuções locais existentes continuam preservadas no material acadêmico original.
 

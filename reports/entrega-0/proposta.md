@@ -55,3 +55,15 @@ KPIs candidatos: recall da classe/faixa crítica, F1 macro quando aplicável, pr
 SHA-256 do manifesto local auditado: `48cd4d7fcd893097212fe32403de21c3026ecd39b65c85f822435cef3a1be4ad`. Aprovação futura deve citar a versão efetivamente discutida.
 
 Rotinas: `scripts/prepare_candidate.py` e `scripts/build_entrega0.py`. Notebook executado em `.local/deliveries/00_validacao_base_externa.ipynb`; template sem saídas em `notebooks/00_validacao_base_externa.ipynb`. Sem treinamento ou métricas preditivas nesta entrega.
+
+## Diagnóstico de viabilidade UF/dia
+
+Calendário candidato: 29,592 combinações de 27 UFs e dias, sem seleção de regiões por ocorrência.
+
+- Com detecção registrada: 15,817.
+- Sem registro regional, mas com registro nacional no dia: 13,613.
+- Combinações UF/dia em datas sem registro nacional: 162.
+
+As contagens sem registro permanecem vazias, sem zeros imputados. Cobertura regional não comprovada; nenhum alvo criado. O volume do calendário não atende, por si, ao requisito de exemplos supervisionados. UF é unidade de diagnóstico, não seleção definitiva da região operacional.
+
+População fixa: [cadastro oficial do IBGE](https://servicodados.ibge.gov.br/api/v1/localidades/estados). Detecções conciliadas com o manifesto auditado. Reprodução: `python scripts/diagnose_regions.py`; contrato em `docs/regional-diagnostic.md`.

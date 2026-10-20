@@ -12,6 +12,17 @@ import nbformat
 from fire_risk.validation import sha256
 
 
+def regional_evidence(folder, manifest_path):
+    summary_path = folder / 'state-days-summary.json'
+    if not summary_path.exists():
+        return None
+    summary = json.loads(summary_path.read_text(encoding='utf-8'))
+    if (summary['manifest_sha256'] != sha256(manifest_path)
+            or summary['output_sha256'] != sha256(folder / 'state-days.csv')):
+        raise ValueError('Diagnóstico regional desatualizado; executar diagnose_regions.py novamente.')
+    return summary
+
+
 def build():
     path = ROOT / '.local/candidates/manifest.json'
     data = json.loads(path.read_text(encoding='utf-8'))
@@ -50,6 +61,16 @@ def build():
               '## Reprodutibilidade', '',
               f"SHA-256 do manifesto local auditado: `{sha256(path)}`. Aprovação futura deve citar a versão efetivamente discutida.", '',
               'Rotinas: `scripts/prepare_candidate.py` e `scripts/build_entrega0.py`. Notebook executado em `.local/deliveries/00_validacao_base_externa.ipynb`; template sem saídas em `notebooks/00_validacao_base_externa.ipynb`. Sem treinamento ou métricas preditivas nesta entrega.']
+    regional = regional_evidence(path.parent, path)
+    if regional:
+        statuses = regional['archive_status_counts']
+        lines += ['', '## Diagnóstico de viabilidade UF/dia', '',
+                  f"Calendário candidato: {regional['calendar_region_days']:,} combinações de {regional['region_count']} UFs e dias, sem seleção de regiões por ocorrência.", '',
+                  f"- Com detecção registrada: {statuses.get('recorded_detection', 0):,}.",
+                  f"- Sem registro regional, mas com registro nacional no dia: {statuses.get('no_regional_record', 0):,}.",
+                  f"- Combinações UF/dia em datas sem registro nacional: {statuses.get('national_archive_gap', 0):,}.", '',
+                  'As contagens sem registro permanecem vazias, sem zeros imputados. Cobertura regional não comprovada; nenhum alvo criado. O volume do calendário não atende, por si, ao requisito de exemplos supervisionados. UF é unidade de diagnóstico, não seleção definitiva da região operacional.', '',
+                  f"População fixa: [cadastro oficial do IBGE]({regional['population_source']}). Detecções conciliadas com o manifesto auditado. Reprodução: `python scripts/diagnose_regions.py`; contrato em `docs/regional-diagnostic.md`."]
     (ROOT / 'reports/entrega-0/proposta.md').write_text('\n'.join(lines)+'\n',encoding='utf-8')
     setup = """from pathlib import Path
 import sys, json, zipfile
