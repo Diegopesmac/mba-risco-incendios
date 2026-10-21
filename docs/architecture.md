@@ -8,6 +8,7 @@ Fonte externa → aquisição com origem/hash → perfil e contrato → validaç
 
 - `src/fire_risk/sources.py`: somente aquisição pública e perfil da candidata INPE. Não define alvo nem treina.
 - `src/fire_risk/validation.py`: chaves, alvo, classes, disponibilidade temporal e vínculo de aprovação ao manifesto.
+- `src/fire_risk/coverage.py`: diagnóstico do calendário UF/dia e conciliação das detecções; não preenche negativos, não cria alvo nem comprova cobertura observacional.
 - `scripts/`: pontos de entrada de aquisição, preparação da Entrega 0 e verificação do recorte publicável.
 - `notebooks/`: narrativa analítica reproduzível; não deve ser o único lugar de regras críticas de tratamento.
 - Rotinas e `notebooks/course/`: baseline anterior, preservado para comparação e reaproveitamento, sem misturar sua aprovação com a da nova base.
