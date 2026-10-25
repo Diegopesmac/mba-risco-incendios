@@ -19,7 +19,11 @@ O estudante justifica decisões e entrega evidências; a tutoria aprova a base e
 9. Depois da revisão do mantenedor e merge, preparar o pacote acadêmico correspondente. Tags/releases e mudança de visibilidade exigem decisão específica do responsável.
 10. Submeter pela plataforma quando autorizado. Incluir os relatórios reais dos revisores na entrega seguinte, com a publicação de seu conteúdo revisada.
 
-## Entrega 0 — validação da base própria
+## Dados do curso — Caminho 2
+
+O fluxo ativo utiliza `configs/course-data.json` e os quatro arquivos fornecidos pelo curso. `prepare_course.py` gera manifesto e derivados; `check_delivery.py --raw-dir <pasta>` verifica hashes e vínculo ao contrato. Entrega 0 não aplicável. Conferir entradas não representa aprovação das entregas 1 ou 2.
+
+## Entrega 0 — aplicável somente à base externa
 
 Evidências: origem, atribuição/licença, problema e público, dicionário, volume pós-tratamento, alvo e classes, ausências/duplicatas, cobertura, variáveis disponíveis na previsão, KPIs propostos e mini-notebook executado.
 

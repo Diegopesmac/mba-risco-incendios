@@ -1,5 +1,13 @@
 # Fontes candidatas, atribuição e disponibilidade
 
+## Fonte ativa — arquivos do curso
+
+O Caminho 2 utiliza `BDMEP-estacao.csv`, `BDMEP-2025.csv`, `MapBiomas.csv` e `queimadas_2024_2025.csv`, disponibilizados no material do MBA e identificados por `configs/course-data.json`. O material atribui a extração ao Base dos Dados. Os originais ficam locais; nenhum CSV é redistribuído.
+
+A análise cobre todas as quatro bases. A legenda MapBiomas recebida não corresponde aos 28 códigos observados, e o arquivo termina em 2021; não atribuir nomes por adivinhação. A meteorologia vai de janeiro a junho/2025, e queimadas de janeiro/2024 a 12/02/2025. A sobreposição é de 43 dias. Nomes, códigos e unidades originais são preservados quando a documentação é insuficiente.
+
+Os tópicos abaixo são referências independentes de fontes externas e não integram a aquisição ativa do curso.
+
 Pesquisa em 20/10/2026. As fontes abaixo foram consultadas diretamente; escolha acadêmica ainda pendente.
 
 ## INPE — arquivos anuais do satélite de referência

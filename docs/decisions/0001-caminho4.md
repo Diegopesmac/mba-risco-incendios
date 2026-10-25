@@ -1,6 +1,6 @@
 # ADR 0001 — base própria e entrega completa
 
-Status: aceito para organização e preparação; seleção científica da base pendente da tutoria.
+Status: histórico. Escopo ativo definido na ADR 0002.
 
 ## Contexto
 
