@@ -17,10 +17,10 @@ def export(con, query, path):
     con.execute(f'COPY ({query}) TO {sqlpath(path)} (FORMAT PARQUET, COMPRESSION ZSTD)')
 
 
-def prepare(root=ROOT):
-    raw = root / 'dados_brutos_queimadas'
-    out = root / 'eda_queimadas'
-    out.mkdir(exist_ok=True)
+def prepare(root=ROOT, raw_dir=None, output_dir=None):
+    raw = Path(raw_dir) if raw_dir is not None else root / 'dados_brutos_queimadas'
+    out = Path(output_dir) if output_dir is not None else root / 'eda_queimadas'
+    out.mkdir(exist_ok=True, parents=True)
     con = duckdb.connect(str(out / 'preparacao.duckdb'))
     con.execute("SET memory_limit='1GB'")
     con.execute('SET threads=4')

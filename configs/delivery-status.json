@@ -1,17 +1,18 @@
 {
   "schema_version": 1,
-  "path": "4",
+  "path": "2",
+  "data_source": "course",
   "repository_visibility": "private",
   "deliveries": {
     "entrega0": {
-      "status": "preparation",
-      "approval": "pending"
+      "status": "not_applicable"
     },
     "entrega1": {
-      "status": "not_submitted"
+      "status": "preparation"
     },
     "entrega2": {
-      "status": "not_started"
+      "status": "initial_benchmark",
+      "test_evaluated": false
     }
   },
   "api_deploy": "planned",

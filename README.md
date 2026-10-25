@@ -1,47 +1,42 @@
-# MBA — previsão de risco de incêndios
+# MBA — risco de incêndios
 
-Projeto acadêmico para investigar previsão regional de detecções de fogo e apresentar risco baixo/médio/alto. Caminho 4: base própria validada pela tutoria, análise, modelos, IA responsável e API.
+**Caminho 2:** dados fornecidos pelo curso, diagnóstico e preparação, comparação de modelos, avaliação responsável e API com Docker/deploy.
 
-**Estado:** estrutura e auditorias implementadas; Entrega 0 em preparação. Ainda não há base externa aprovada, modelo treinado ou API publicada. O repositório permanece privado; tornar público é uma decisão futura separada.
+O caso acadêmico busca estimar baixo/médio/alto para uma região e dia. O contrato utiliza as classes do índice `risco_fogo` registrado no arquivo do curso. A população observada é condicionada às detecções; não se estima probabilidade física de incêndio em qualquer município/dia.
 
-## Identidade e fronteiras
+## Dados e preparação
 
-Este projeto é uma solução acadêmica de ciência de dados para apoio à priorização preventiva. Não é um sistema oficial de alerta, serviço de emergência ou medida de incêndios reais únicos. A primeira candidata vem de arquivos anuais oficiais de detecções do INPE; fontes meteorológicas ainda estão em avaliação. Integrações externas limitam-se às fontes documentadas e ao futuro serviço de inferência. Conteúdos de outras atividades não fazem parte do projeto.
-
-## Comece aqui
-
-- [Protocolo de entregas e Git](docs/delivery-protocol.md)
-- [Rubrica e critérios de aceite](docs/rubric.md)
-- [Arquitetura](docs/architecture.md)
-- [Fontes, licenças e disponibilidade](docs/data-sources.md)
-- [Proposta para a Entrega 0](reports/entrega-0/proposta.md)
-- [Contrato dos dados e do alvo](docs/data-contract.md)
-
-## Execução
-
-Python 3.12. A partir da raiz:
+Python 3.12. Quatro CSVs fornecidos para o caso: `BDMEP-estacao.csv`, `BDMEP-2025.csv`, `MapBiomas.csv` e `queimadas_2024_2025.csv`. Originais somente leitura, sem redistribuição. `configs/course-data.json` fixa os hashes da versão utilizada.
 
 ```sh
 python -m pip install -r requirements.txt
 python -m pip install -e . --no-deps
-python scripts/prepare_candidate.py --years 2023 2024 2025
-python scripts/diagnose_regions.py
-python scripts/build_entrega0.py
+python scripts/prepare_course.py --raw-dir <pasta-dos-quatro-csvs>
+python scripts/check_delivery.py --raw-dir <pasta-dos-quatro-csvs>
+python scripts/build_course_panel.py --raw-dir <pasta-dos-quatro-csvs>
+python scripts/benchmark_course.py
+python scripts/build_course_notebook.py
 python -m unittest discover -s tests -v
 python -m unittest test_preparacao_queimadas -v
 python scripts/check_publication.py
 ```
 
-Os dados reais ficam em `.local/`, fora do Git. O download candidato tem cerca de 24 MB compactados. O notebook executado da Entrega 0 fica em `.local/deliveries/`; o modelo de notebook versionado fica em `notebooks/`. Não é necessário autenticar no INPE para os arquivos anuais selecionados.
+Manifesto, bancos e derivados ficam em `.local/course/`. A preparação confirma duplicatas por igualdade exata, reserva horários divergentes, preserva ausências e distingue precipitação parcial de 24 horas completas. As rotinas e os notebooks em `notebooks/course/` contêm auditoria e EDA dos quatro arquivos.
 
-O diagnóstico regional produz `state-days.csv` e `state-days-summary.json` em `.local/candidates/`, conciliando os hashes e o total de detecções com o manifesto. Inclui todas as 27 UFs e todos os dias dos anos auditados. Contagens sem registro ficam vazias; cobertura permanece não comprovada e nenhum alvo é criado. Consulte o [guia do diagnóstico regional](docs/regional-diagnostic.md) antes de interpretar os resultados.
+## Documentação
 
-As quatro rotinas na raiz e `notebooks/course/` preservam o trabalho anterior com os arquivos oferecidos pelo curso. Para reproduzir essa análise, disponibilizar os quatro CSVs em `dados_brutos_queimadas/`; esses CSVs e os resultados não são incluídos no Git. Os notebooks versionados estão sem saídas; as execuções locais existentes continuam preservadas no material acadêmico original.
+- [Arquitetura](docs/architecture.md)
+- [Contrato dos dados e do alvo](docs/data-contract.md)
+- [Fontes](docs/data-sources.md)
+- [Entregas](docs/delivery-protocol.md)
+- [Rubrica](docs/rubric.md)
+- [Escopo técnico](docs/decisions/0002-base-curso.md)
+- [Modelagem e reprodução](docs/modeling.md)
 
-## Controles de avanço
+## Estado e limites
 
-A validação do código não aprova a base acadêmica. `python scripts/check_delivery.py` retorna bloqueio enquanto faltar o registro real de aprovação da Entrega 0, vinculado ao hash do manifesto. Esse registro não autentica a identidade da tutoria e deve ser acompanhado da evidência humana. Não criar aprovações fictícias para liberar desenvolvimento científico.
+Preparação, painel supervisionado e comparação inicial de referência mais três modelos implementados. Otimização e avaliação final pendentes; API e deploy planejados. Entrega 0 não aplicável aos dados do curso; submissão e aprovação das entregas 1 e 2 são registradas somente quando ocorrerem.
 
-## Licenciamento e portfólio
+Meteorologia e queimadas têm apenas 43 dias de sobreposição. O significado das 28 classes MapBiomas não é inferido da legenda incompatível do material. Variáveis obtidas na detecção futura ou no fim do dia previsto não entram como features. O trabalho não é um serviço oficial de alerta.
 
-Nenhum dado bruto é redistribuído. As fontes e suas condições estão em `docs/data-sources.md`. A licença de distribuição do código será escolhida antes da abertura pública. O futuro portfólio deverá mostrar resultados reproduzíveis, limitações, documentação e evidências revisadas, sem prometer uso operacional que não tenha sido validado.
+Repositório privado. Abertura pública, licença, redistribuição de dados e publicação de serviço exigem revisão própria.
