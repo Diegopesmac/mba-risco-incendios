@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: mba-risco-incendios
+    runtime: docker
+    plan: free
+    autoDeployTrigger: "off"
+    healthCheckPath: /health
+    envVars:
+      - key: MODEL_PAYLOAD_B64
+        sync: false
+      - key: MODEL_MANIFEST_SHA256
+        sync: false

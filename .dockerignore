@@ -1,0 +1,8 @@
+**
+!Dockerfile
+!requirements-api.txt
+!src/
+!src/**
+!scripts/
+!scripts/start_api.py
+src/**/__pycache__/
