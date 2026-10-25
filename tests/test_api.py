@@ -55,6 +55,21 @@ class ApiTest(unittest.TestCase):
         self.assertEqual(client.get('/health').status_code, 503)
         self.assertEqual(client.post('/predict', json=self.request).status_code, 503)
 
+    def test_calendar_boundaries_return_validation_errors_without_overflow(self):
+        for target, weather in [('0001-01-01', '0001-01-01'),
+                                ('0001-01-02', '0001-01-01'),
+                                ('9999-12-31', '0001-01-01')]:
+            with self.subTest(target=target, weather=weather):
+                response = self.client.post('/predict', json={
+                    **self.request, 'data_alvo': target, 'data_meteorologia': weather})
+                self.assertEqual(response.status_code, 422)
+        for target, weather in [('0001-01-03', '0001-01-01'),
+                                ('9999-12-31', '9999-12-29')]:
+            with self.subTest(target=target, weather=weather):
+                self.assertEqual(self.client.post('/predict', json={
+                    **self.request, 'data_alvo': target,
+                    'data_meteorologia': weather}).status_code, 200)
+
     def test_model_hash_rejected_before_unpickling(self):
         (self.folder / 'model.joblib').write_bytes(b'changed')
         with patch('fire_risk.serving.joblib.load', side_effect=AssertionError('unpickle')):

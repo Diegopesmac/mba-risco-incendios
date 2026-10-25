@@ -1,5 +1,5 @@
 """API pública acadêmica; não treina, não adquire fontes e não recebe artefatos."""
-from datetime import date, timedelta
+from datetime import date
 from pathlib import Path
 import os
 
@@ -24,7 +24,7 @@ class PredictionInput(BaseModel):
 
     @model_validator(mode='after')
     def validate_dates(self):
-        if self.data_meteorologia != self.data_alvo - timedelta(days=2):
+        if (self.data_alvo - self.data_meteorologia).days != 2:
             raise ValueError('Meteorologia deve corresponder a D-2 em datas UTC.')
         return self
 
