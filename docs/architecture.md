@@ -13,6 +13,12 @@ CSVs do curso → contrato/hash → preparação exploratória → painel rotula
 - `src/fire_risk/course.py`: integridade dos quatro arquivos fornecidos.
 - `src/fire_risk/panel.py`: alvo, junção conservadora, defasagem e divisões temporais fixas.
 - `src/fire_risk/training.py`: referência e três modelos com validação temporal; não acessa teste final nem fontes brutas.
+- `src/fire_risk/optimization.py`: Optuna e folds cronológicos internos ao treino, seleção pela validação.
+- `src/fire_risk/assessment.py`: hipótese exploratória, importância por permutação, grupos, incerteza e custos simulados.
+- `src/fire_risk/finalization.py`: congelamento das escolhas, ajuste final e abertura única do teste com resultado reutilizável.
+- `src/fire_risk/serving.py`, `api.py` e `bundle.py`: verificação do artefato, inferência e contrato HTTP; sem treino por requisição.
+- `scripts/start_api.py` e `Dockerfile`: inicialização e empacotamento do serviço; modelo configurado separadamente.
+- `scripts/optimize_course.py`, `finalize_course.py` e `build_final_notebook.py`: orquestração da avaliação e narrativa final.
 - `preparar_eda_queimadas.py`: deduplicação exata, reserva de versões ambíguas e agregação descritiva. Recebe diretórios de entrada/saída; não modifica CSVs.
 - `src/fire_risk/validation.py`: chaves, alvo e disponibilidade temporal; validação de base externa independente do fluxo do curso.
 - `scripts/prepare_course.py`: adaptador de preparação, manifesto e derivados em `.local/course/`.
@@ -26,4 +32,4 @@ Features, treinamento, avaliação e API recebem contratos explícitos. A API ca
 
 ## Dependências e reprodução
 
-Python 3.12; pandas, NumPy, DuckDB, Matplotlib, SciPy e nbformat na preparação. Bibliotecas de modelos, otimização, explicabilidade e API entram junto da respectiva implementação. Teste temporal reservado; nenhuma estatística aprendida usa o teste final.
+Python 3.12; pandas, NumPy, DuckDB, Matplotlib, SciPy e nbformat na preparação; scikit-learn/joblib no modelo; Optuna na busca; FastAPI/Uvicorn no serviço. `requirements-api.txt` separa dependências de inferência. A API importa o contrato de features do painel, sem executar preparação; por isso DuckDB também faz parte do ambiente de inferência. Nenhuma estatística aprendida usa o teste final. Os resultados registrados podem ser apresentados novamente sem reabrir a seleção.

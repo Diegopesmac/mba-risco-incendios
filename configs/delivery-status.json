@@ -11,10 +11,10 @@
       "status": "preparation"
     },
     "entrega2": {
-      "status": "initial_benchmark",
-      "test_evaluated": false
+      "status": "evaluated_not_submitted",
+      "test_evaluated": true
     }
   },
-  "api_deploy": "planned",
+  "api_deploy": "implemented_public_deployment_pending",
   "public_release": "not_authorized"
 }
