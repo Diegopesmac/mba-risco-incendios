@@ -11,7 +11,7 @@
 | E2: valor | Custos simulados, premissas, sensibilidade e plano A/B | Matriz fictícia, 12 cenários e plano prospectivo documentados |
 | E2: otimização | Optuna sem consultar teste final | 20 tentativas por família, três folds internos cronológicos |
 | E2: responsabilidade | Explicabilidade, três variáveis, vieses e limites | Permutação na validação, grupos com suporte e model card |
-| Etapa 4 | FastAPI, request, Docker, dependências e API ativa | API local e container no CI verificados; publicação pública pendente |
+| Etapa 4 | FastAPI, request, Docker, dependências e API ativa | API local, container no CI e API pública no Render verificados; saúde/previsão 200, inválida 422 |
 | Revisões | Feedback real e notebooks executados | Não submetido |
 
 Entrega 0 não aplicável aos dados do curso. Testes não significam aprovação acadêmica nem serviço publicado.

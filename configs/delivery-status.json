@@ -15,6 +15,7 @@
       "test_evaluated": true
     }
   },
-  "api_deploy": "implemented_public_deployment_pending",
+  "api_deploy": "public_http_verified",
+  "api_url": "https://mba-risco-incendios.onrender.com",
   "public_release": "not_authorized"
 }

@@ -4,6 +4,8 @@
 
 O caso acadêmico busca estimar baixo/médio/alto para uma região e dia. O contrato utiliza as classes do índice `risco_fogo` registrado no arquivo do curso. A população observada é condicionada às detecções; não se estima probabilidade física de incêndio em qualquer município/dia.
 
+API pública para avaliação: [documentação interativa](https://mba-risco-incendios.onrender.com/docs), [saúde do modelo](https://mba-risco-incendios.onrender.com/health). Serviço gratuito no Render: a primeira resposta após inatividade pode demorar 50 segundos ou mais.
+
 ## Dados e preparação
 
 Python 3.12. Quatro CSVs fornecidos para o caso: `BDMEP-estacao.csv`, `BDMEP-2025.csv`, `MapBiomas.csv` e `queimadas_2024_2025.csv`. Originais somente leitura, sem redistribuição. `configs/course-data.json` fixa os hashes da versão utilizada.
@@ -41,7 +43,7 @@ Manifesto, bancos e derivados ficam em `.local/course/`. A preparação confirma
 
 ## Estado e limites
 
-Preparação, comparação de três famílias, otimização temporal, avaliação final congelada, explicabilidade, análise por grupos e custos simulados executados. O modelo final obteve F1 macro 0,4097 e recall alto 0,5690 no teste temporal de 310 exemplos. API e Docker implementados e testados; publicação pública pendente, sem URL ativa. Entrega 0 não aplicável aos dados do curso; entregas 1 e 2 ainda não submetidas.
+Preparação, comparação de três famílias, otimização temporal, avaliação final congelada, explicabilidade, análise por grupos e custos simulados executados. O modelo final obteve F1 macro 0,4097 e recall alto 0,5690 no teste temporal de 310 exemplos. API publicada no Render e verificada por HTTP em 25/10/2026: saúde 200, previsão 200 e entrada inválida 422, com o modelo final `852606b93da31ade`. Entrega 0 não aplicável aos dados do curso; entregas 1 e 2 ainda não submetidas.
 
 Os comandos de otimização devem ser executados antes de congelar a avaliação. Depois de existir `final/freeze.json`, nova otimização é bloqueada; a avaliação final reutiliza seu resultado registrado. Não apagar os registros para ajustar escolhas depois de observar o teste.
 
