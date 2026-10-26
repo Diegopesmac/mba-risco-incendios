@@ -2,6 +2,7 @@
 from pathlib import Path
 import hashlib
 import io
+import json
 import subprocess
 import sys
 import zipfile
@@ -19,7 +20,9 @@ def build():
         entries = {n: source.read(n) for n in source.namelist() if not n.endswith('/')
                    and not n.startswith(('.github/', 'reports/entrega-0/'))}
     for name in [*NOTEBOOKS, 'submission/painel_modelagem.csv', 'submission/manifest.json']:
-        if entries[name] != (ROOT / name).read_bytes():
+        local = (ROOT / name).read_bytes()
+        equal = json.loads(entries[name]) == json.loads(local) if name.endswith('.ipynb') else entries[name] == local
+        if not equal:
             raise ValueError('Commit e entrega local divergem: ' + name)
     entries['LEIA-ME.txt'] = (
         f'Entrega acadêmica — Caminho 2\nCódigo: {revision}\n\n'
