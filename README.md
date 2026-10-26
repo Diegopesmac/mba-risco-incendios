@@ -4,6 +4,8 @@
 
 O caso acadêmico busca estimar baixo/médio/alto para uma região e dia. O contrato utiliza as classes do índice `risco_fogo` registrado no arquivo do curso. A população observada é condicionada às detecções; não se estima probabilidade física de incêndio em qualquer município/dia.
 
+API pública para avaliação: [documentação interativa](https://mba-risco-incendios.onrender.com/docs), [saúde do modelo](https://mba-risco-incendios.onrender.com/health). Serviço gratuito no Render: a primeira resposta após inatividade pode demorar 50 segundos ou mais.
+
 ## Dados e preparação
 
 Python 3.12. Quatro CSVs fornecidos para o caso: `BDMEP-estacao.csv`, `BDMEP-2025.csv`, `MapBiomas.csv` e `queimadas_2024_2025.csv`. Originais somente leitura, sem redistribuição. `configs/course-data.json` fixa os hashes da versão utilizada.
@@ -16,6 +18,9 @@ python scripts/check_delivery.py --raw-dir <pasta-dos-quatro-csvs>
 python scripts/build_course_panel.py --raw-dir <pasta-dos-quatro-csvs>
 python scripts/benchmark_course.py
 python scripts/build_course_notebook.py
+python scripts/optimize_course.py
+python scripts/finalize_course.py
+python scripts/build_final_notebook.py
 python -m unittest discover -s tests -v
 python -m unittest test_preparacao_queimadas -v
 python scripts/check_publication.py
@@ -32,10 +37,15 @@ Manifesto, bancos e derivados ficam em `.local/course/`. A preparação confirma
 - [Rubrica](docs/rubric.md)
 - [Escopo técnico](docs/decisions/0002-base-curso.md)
 - [Modelagem e reprodução](docs/modeling.md)
+- [Modelo final e limitações](docs/model-card.md)
+- [API e publicação](docs/deployment.md)
+- [Plano A/B](docs/ab-plan.md)
 
 ## Estado e limites
 
-Preparação, painel supervisionado e comparação inicial de referência mais três modelos implementados. Otimização e avaliação final pendentes; API e deploy planejados. Entrega 0 não aplicável aos dados do curso; submissão e aprovação das entregas 1 e 2 são registradas somente quando ocorrerem.
+Preparação, comparação de três famílias, otimização temporal, avaliação final congelada, explicabilidade, análise por grupos e custos simulados executados. O modelo final obteve F1 macro 0,4097 e recall alto 0,5690 no teste temporal de 310 exemplos. API publicada no Render e verificada por HTTP em 25/10/2026: saúde 200, previsão 200 e entrada inválida 422, com o modelo final `852606b93da31ade`. Entrega 0 não aplicável aos dados do curso; entregas 1 e 2 ainda não submetidas.
+
+Os comandos de otimização devem ser executados antes de congelar a avaliação. Depois de existir `final/freeze.json`, nova otimização é bloqueada; a avaliação final reutiliza seu resultado registrado. Não apagar os registros para ajustar escolhas depois de observar o teste.
 
 Meteorologia e queimadas têm apenas 43 dias de sobreposição. O significado das 28 classes MapBiomas não é inferido da legenda incompatível do material. Variáveis obtidas na detecção futura ou no fim do dia previsto não entram como features. O trabalho não é um serviço oficial de alerta.
 

@@ -11,10 +11,11 @@
       "status": "preparation"
     },
     "entrega2": {
-      "status": "initial_benchmark",
-      "test_evaluated": false
+      "status": "evaluated_not_submitted",
+      "test_evaluated": true
     }
   },
-  "api_deploy": "planned",
+  "api_deploy": "public_http_verified",
+  "api_url": "https://mba-risco-incendios.onrender.com",
   "public_release": "not_authorized"
 }

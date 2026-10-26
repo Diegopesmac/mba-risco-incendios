@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "seed": 42,
+  "trials_per_family": 20,
+  "cv_splits": 3,
+  "cv_validation_days": 4,
+  "cv_gap_days": 1,
+  "primary_metric": "f1_macro",
+  "selection_tie_breaker": "recall_alto_then_name",
+  "bootstrap_day_samples": 1000,
+  "permutation_repeats": 20,
+  "hypothesis": {
+    "sample": "training_only",
+    "question": "Diferença municipal de umidade D-2 entre índice alto e demais classes",
+    "minimum_days_per_condition": 3,
+    "alpha": 0.05,
+    "alternative": "two-sided",
+    "null": "Distribuição das diferenças pareadas simétrica em torno de zero"
+  },
+  "cost_scenario": {
+    "kind": "fictional_academic_simulation",
+    "currency": "BRL",
+    "labels": ["baixo", "medio", "alto"],
+    "actual_by_predicted": [[0, 10, 30], [50, 0, 20], [200, 80, 0]],
+    "missed_high_multipliers": [0.5, 1, 2, 4],
+    "overalert_multipliers": [0.5, 1, 2]
+  }
+}

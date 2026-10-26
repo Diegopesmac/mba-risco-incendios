@@ -18,3 +18,22 @@ jobs:
       - run: python -m unittest discover -s tests -v
       - run: python -m unittest test_preparacao_queimadas -v
       - run: python scripts/check_publication.py
+  container:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements-api.txt
+      - run: python scripts/make_synthetic_bundle.py --output .local/ci-bundle
+      - run: docker build -t fire-risk-ci .
+      - run: docker run -d --name fire-risk-ci -e MODEL_DIR=/model -v "$PWD/.local/ci-bundle:/model:ro" -p 127.0.0.1:18080:8000 fire-risk-ci
+      - run: |
+          for attempt in $(seq 1 40); do
+            if curl -fsS http://127.0.0.1:18080/health; then break; fi
+            sleep 2
+          done
+          python scripts/smoke_api.py --url http://127.0.0.1:18080 --request configs/example-request.json
+      - if: always()
+        run: docker rm -f fire-risk-ci || true
