@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "frozen_at": "2026-10-25T22:53:33.874570+00:00",
+  "selected": "otimizada_logistica",
+  "features": [
+    "chuva_d2",
+    "temperatura_d2",
+    "umidade_d2",
+    "vento_d2"
+  ],
+  "labels": [
+    "baixo",
+    "medio",
+    "alto"
+  ],
+  "development_rows": 947,
+  "artifacts": {
+    "otimizada_logistica": {
+      "file": "otimizada_logistica.joblib",
+      "sha256": "852606b93da31adee314de524621736baa049fdf859fa0a8dd2740bfb24cc9d5"
+    },
+    "referencia": {
+      "file": "referencia.joblib",
+      "sha256": "9d6a62d2a1c3209eb4577d05bca7c9b6c7037af6cee240b1425b7f33196ca42d"
+    }
+  },
+  "panel_sha256": "c1c8df137cb670ae5559ad29c29631fe61fe3f9101842f27ee4f362583525596",
+  "optimization_sha256": "6c8eb26ef8ba801b4635f117aafe496929dd96152f9bbd6b9ecad5a142dbc9c3",
+  "plan_sha256": "8d238081f292be7582972a0c55618261f00137dfd13ab0a6ad348a02d5376934",
+  "code_sha256": {
+    "panel.py": "5a1ab85a6f8b263985cd8b09d5d877182e1f13461e2f1d76919e23e396e4976c",
+    "training.py": "4e3c6e39e6c83411709557c9bbc3c5aa4ba0c69dc4ff540ed5cd266771b3ed0d",
+    "optimization.py": "0a18e528cbb13a2931d4307aa65e044599c9eda93d498db4228ef6f473c81f3d",
+    "assessment.py": "3c5f187d46663cc576ab827c5a6fe871c8a6c2d80f0a5ea4a31534c9d2c188bb",
+    "metrics.py": "19efc6f3e25ed342669918e9f0085a63c83b0ab03b3cbfb14d03f15319212f3c",
+    "finalization.py": "a0880254a54903210f93baf9a6218e5d57f4cabb44d643168ae5193fa09234aa"
+  },
+  "versions": {
+    "scikit-learn": "1.9.0",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "joblib": "1.5.3",
+    "optuna": "5.0.0"
+  },
+  "target_contract_sha256": "7a3ccd3d9ca85336635128ac87867d1af79fce1cbbb0e65f346014ac7e062dfe",
+  "operational_use_validated": false
+}

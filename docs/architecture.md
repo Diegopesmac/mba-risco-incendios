@@ -25,6 +25,9 @@ CSVs do curso → contrato/hash → preparação exploratória → painel rotula
 - `scripts/build_course_panel.py`, `benchmark_course.py` e `build_course_notebook.py`: evidência de painel, comparação e narrativa executada local, sem publicação automática.
 - `scripts/check_delivery.py`: seleção explícita de contrato por caminho/fonte; não declara aprovação de entrega.
 - `notebooks/course/`: auditoria e narrativa exploratória; regras críticas ficam em código reutilizável.
+- `src/fire_risk/submission.py`: leitura e validação do painel entregue, dicionário e correlações restritas ao treino, sem dependência do treinamento.
+- `scripts/build_submission.py` e `submission_notebooks.py`: exportação e execução dos quatro notebooks com evidências congeladas; `package_submission.py`: ZIP da revisão Git.
+- `submission/`: painel municipal derivado, evidências e manifesto necessários para reproduzir a apresentação acadêmica. Recorte privado definido na ADR 0003.
 - `.local/`: dados, resultados, bancos, modelos e execuções não versionados.
 - `sources.py`, `coverage.py` e rotinas de base externa: ferramentas independentes, fora do fluxo ativo do curso.
 

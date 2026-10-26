@@ -26,7 +26,7 @@ Seleção por F1 macro da validação, desempate por recall alto e nome. A refer
 
 Artefatos locais em joblib, com hash por modelo e versões fixadas; carregar somente arquivos produzidos e conferidos pelo próprio fluxo. Joblib utiliza pickle e não é formato seguro para arquivos não confiáveis, conforme [documentação scikit-learn](https://scikit-learn.org/stable/model_persistence.html). Hash verifica integridade contra o manifesto, não autentica sua origem. Não redistribuir modelos ou dados automaticamente.
 
-O notebook versionado `notebooks/course/03_painel_modelos_curso.ipynb` fica sem saídas. A cópia executada e o gráfico ficam em `.local/deliveries/`. O gerador executa as células em sequência no processo Python e incorpora saídas; não representa execução de interface Jupyter ao vivo.
+O notebook versionado `notebooks/course/03_painel_modelos_curso.ipynb` contém saídas da comparação inicial e otimizada. `scripts/build_submission.py` executa as células em sequência e incorpora resultados e gráficos a partir dos registros científicos. O processo não representa uma interação com a interface Jupyter ao vivo nem repete a busca de parâmetros.
 
 ## Otimização e congelamento
 
@@ -38,6 +38,6 @@ Optuna executa 20 tentativas por família em três folds cronológicos internos 
 
 Importância por permutação na validação destaca vento, umidade e chuva. Hipótese de umidade avaliada somente no treino, com comparação pareada por município e teste de Wilcoxon; interpretação exploratória, sem conclusão causal. O teste final usa 310 exemplos, com F1 macro 0,4097 e recall alto 0,5690. Reamostragem por dia e grupos por UF, semana e cobertura acompanham contagens e limitações. Custos são fictícios; o [plano A/B](ab-plan.md) é prospectivo e não foi executado.
 
-O [model card](model-card.md) reúne resultados e restrições. Janela curta, classe intermediária rara e amostragem condicionada impedem declarar generalização operacional. O notebook final limpo é `notebooks/04_projeto_final_curso.ipynb`; sua cópia executada fica em `.local/deliveries/`. O gerador lê resultados existentes, sem treinar novamente ou alterar escolhas. API e Docker são descritos no [guia de publicação](deployment.md); a publicação pública permanece uma verificação separada.
+O [model card](model-card.md) reúne resultados e restrições. Janela curta, classe intermediária rara e amostragem condicionada impedem declarar generalização operacional. O notebook final executado é `notebooks/04_projeto_final_curso.ipynb`; base, evidências e hashes estão em `submission/`. O gerador lê resultados existentes, sem treinar novamente ou alterar escolhas. O notebook 02 acrescenta distribuição do alvo e correlações Pearson/Spearman exclusivamente no treino, como complemento documental posterior ao congelamento; não houve nova seleção a partir dessa análise. API e Docker são descritos no [guia de publicação](deployment.md); a publicação pública permanece uma verificação separada.
 
 Dependências adicionais: scikit-learn (modelos e métricas, BSD-3-Clause), joblib (persistência local, BSD-3-Clause), threadpoolctl (controle de threads, BSD-3-Clause) e narwhals (dependência do scikit-learn, MIT). Nenhuma dependência substitui o contrato temporal.

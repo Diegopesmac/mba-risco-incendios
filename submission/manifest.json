@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "rows": 1329,
+  "splits": {
+    "train": 764,
+    "test": 310,
+    "validation": 183,
+    "gap": 72
+  },
+  "model_id": "852606b93da31ade",
+  "original_panel_sha256": "c1c8df137cb670ae5559ad29c29631fe61fe3f9101842f27ee4f362583525596",
+  "source": "course_derived_panel",
+  "submission_status": "not_submitted",
+  "files": {
+    "submission/painel_modelagem.csv": "eb3cffab0ee8b41fa6b7282dada8ba6de4b59bcca3c546cb832dd9d3f1eeb806",
+    "docs/data-dictionary.md": "5df84babf414b34ddc2e365d87f99fb354d74a9f1567e37d0e965d3145c05185",
+    "submission/evidence/deployment.json": "e390850a7c16b218cf8de15eaa424984ef324fc673bd546fd82e5d0117bef8ec",
+    "submission/evidence/evaluation.json": "43c787640d4c41ee07c8c2868f071d4594d3147f0f8f8ac6d06f6573a54a0cab",
+    "submission/evidence/freeze.json": "4a501f4bd126740141053c4fb1403ceee7fd20611dcacebc8ebf5944fc9e7ad7",
+    "submission/evidence/manifest.json": "aca2dfc776f1f198874ba1a35cd620370bcb51e02bf01b0a700c19f9f8298c73",
+    "submission/evidence/optimization.json": "6c8eb26ef8ba801b4635f117aafe496929dd96152f9bbd6b9ecad5a142dbc9c3",
+    "submission/evidence/panel-summary.json": "3a598bb64ed025a417f6a60c5fb147c735ef72fdb918e48b04e607ff2213136f",
+    "submission/evidence/resumo_preparacao.json": "1be5168b4b4603060ce50d4b147404765fc8f9b3b69da59b2bd42b1add7878be"
+  }
+}

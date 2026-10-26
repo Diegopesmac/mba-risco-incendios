@@ -4,13 +4,12 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'scripts'))
-from build_course_notebook import SECTIONS
-from build_final_notebook import SECTIONS as FINAL_SECTIONS
+from submission_notebooks import AUDIT, EDA, MODELS, FINAL
 
 
 class NotebookTest(unittest.TestCase):
     def test_generated_code_cells_have_valid_python_indentation(self):
-        for index, (kind, content) in enumerate(SECTIONS + FINAL_SECTIONS):
+        for index, (kind, content) in enumerate(AUDIT + EDA + MODELS + FINAL):
             if kind == 'code':
                 with self.subTest(index=index):
                     compile(content, '<course-notebook>', 'exec')

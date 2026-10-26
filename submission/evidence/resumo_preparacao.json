@@ -1,0 +1,19 @@
+{
+  "meteorologia_linhas_originais": 4891176,
+  "meteorologia_linhas_distintas": 2463184,
+  "duplicatas_exatas_removidas_derivado": 2427992,
+  "chaves_com_multiplas_variantes": 11080,
+  "linhas_distintas_reservadas_por_chave_multipla": 22160,
+  "linhas_horarias_usadas": 2441024,
+  "estacoes_dias": 101759,
+  "estacoes_dias_precipitacao_24h": 56350,
+  "estacoes_dias_sem_municipio": 992,
+  "linhas_deteccoes": 8226944,
+  "risco_fogo_menos999": 89779,
+  "risco_fogo_vazio": 112670,
+  "dias_sem_chuva_menos999": 64106,
+  "inicio_queimadas": "2024-01-01",
+  "fim_queimadas": "2025-02-12",
+  "municipios_dias_com_deteccao": 324219,
+  "politica": "Igualdade exata de valores em todas as colunas. Chaves com múltiplas variantes separadas, sem escolha arbitrária. Sem imputação. Somatórios parciais não equivalem a totais de 24 horas. Datas de fogo em UTC; fontes ainda não unidas. Sem rótulos ou modelos."
+}
