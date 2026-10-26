@@ -53,7 +53,7 @@ Gate: imagem construída e smoke test executado, request real no serviço public
 
 ## Pacotes e futuro portfólio
 
-Os notebooks de desenvolvimento versionados ficam limpos. Para cada submissão, produzir cópia executada, tabelas/gráficos revisados, manifesto e instruções em `.local/deliveries/`. O notebook final precisa manter resultados, conforme a rubrica; sua disponibilização por arquivo ou release privado será revisada antes da submissão. Se for decidido versionar saídas, ajustar o gate em mudança explícita, com revisão de conteúdo.
+Os quatro notebooks canônicos indicados no README ficam executados no GitHub privado, com resultados e gráficos revisados. `submission/painel_modelagem.csv`, seu manifesto e `docs/data-dictionary.md` acompanham a entrega. O gate permite somente esses caminhos de saídas e o CSV com esquema fechado, integridade e partições conferidas, conforme ADR 0003. Outros dados locais e modelos binários continuam excluídos. O pacote em `.local/deliveries/` é produzido com `scripts/package_submission.py` a partir da revisão Git e repete os mesmos artefatos. A apresentação executa sem dados brutos; a reconstrução desde as fontes é separada.
 
 A futura abertura pública exige revisão de direitos de dados/código, conteúdo e histórico, retirada de referências privadas, testes reproduzíveis, model/data cards e avaliação do serviço externo. Nenhuma mudança automática de visibilidade está prevista.
 

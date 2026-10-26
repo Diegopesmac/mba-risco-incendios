@@ -1,0 +1,81 @@
+{
+  "source": "course",
+  "rows": 1329,
+  "features": [
+    "chuva_d2",
+    "temperatura_d2",
+    "umidade_d2",
+    "vento_d2"
+  ],
+  "target": "median_recorded_fire_risk_3_classes",
+  "weather_lag_days": 2,
+  "source_detection_records_in_period": 78100,
+  "invalid_index_records_in_period": 2172,
+  "municipality_days_with_records": 19985,
+  "municipality_days_without_valid_index": 779,
+  "valid_target_days_without_eligible_weather": 17877,
+  "classes": {
+    "baixo": 857,
+    "alto": 354,
+    "medio": 118
+  },
+  "split_plan": {
+    "train_end": "2025-01-25",
+    "validation_start": "2025-01-27",
+    "validation_end": "2025-02-02",
+    "test_start": "2025-02-04",
+    "test_end": "2025-02-12"
+  },
+  "splits": {
+    "gap": {
+      "rows": 72,
+      "days": 2,
+      "first_date": "2025-01-26",
+      "last_date": "2025-02-03",
+      "classes": {
+        "baixo": 42,
+        "alto": 22,
+        "medio": 8
+      }
+    },
+    "test": {
+      "rows": 310,
+      "days": 9,
+      "first_date": "2025-02-04",
+      "last_date": "2025-02-12",
+      "classes": {
+        "baixo": 221,
+        "alto": 58,
+        "medio": 31
+      }
+    },
+    "train": {
+      "rows": 764,
+      "days": 23,
+      "first_date": "2025-01-03",
+      "last_date": "2025-01-25",
+      "classes": {
+        "baixo": 453,
+        "alto": 242,
+        "medio": 69
+      }
+    },
+    "validation": {
+      "rows": 183,
+      "days": 7,
+      "first_date": "2025-01-27",
+      "last_date": "2025-02-02",
+      "classes": {
+        "baixo": 141,
+        "alto": 32,
+        "medio": 10
+      }
+    }
+  },
+  "historical_publication_verified": false,
+  "limitation": "Índice condicionado às detecções; não estima ocorrência física. Atraso de publicação hipotético.",
+  "source_manifest_sha256": "aca2dfc776f1f198874ba1a35cd620370bcb51e02bf01b0a700c19f9f8298c73",
+  "preparation_manifest_sha256": "ea67710eadc16ac88d561d66957496c772d50e6c11e8652fd68373ae51a96e46",
+  "panel_sha256": "c1c8df137cb670ae5559ad29c29631fe61fe3f9101842f27ee4f362583525596",
+  "panel_code_sha256": "5a1ab85a6f8b263985cd8b09d5d877182e1f13461e2f1d76919e23e396e4976c"
+}

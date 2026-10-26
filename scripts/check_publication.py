@@ -4,8 +4,19 @@ import argparse
 import json
 import re
 import subprocess
+import csv
+import io
+import sys
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / 'src'))
+ACADEMIC_NOTEBOOKS = {
+    'notebooks/course/01_auditoria_queimadas.ipynb',
+    'notebooks/course/02_eda_preparacao_queimadas.ipynb',
+    'notebooks/course/03_painel_modelos_curso.ipynb',
+    'notebooks/04_projeto_final_curso.ipynb',
+}
+ACADEMIC_PANEL = 'submission/painel_modelagem.csv'
 BLOCKED_PARTS = {'.local', '.env', 'data', 'models', 'outputs', 'dados_brutos_queimadas',
                  'eda_queimadas', 'auditoria_queimadas', '__pycache__', '.deps_queimadas'}
 BLOCKED_SUFFIXES = {'.csv', '.zip', '.parquet', '.duckdb', '.sqlite', '.pkl', '.joblib'}
@@ -19,7 +30,8 @@ PATTERNS = [re.compile(p) for p in [
 
 def check_file(root, name, contents=None):
     path = root / name
-    if any(part in BLOCKED_PARTS for part in Path(name).parts) or path.suffix.lower() in BLOCKED_SUFFIXES:
+    if (any(part in BLOCKED_PARTS for part in Path(name).parts)
+            or (path.suffix.lower() in BLOCKED_SUFFIXES and name != ACADEMIC_PANEL)):
         return ['caminho ou formato local não publicável']
     if contents is None and not path.is_file():
         return []
@@ -37,8 +49,19 @@ def check_file(root, name, contents=None):
             errors.append(f'conteúdo suspeito na linha {line_number}; valor omitido')
     if path.suffix == '.ipynb':
         notebook = json.loads(content)
-        if any(c.get('outputs') or c.get('execution_count') is not None for c in notebook['cells'] if c['cell_type'] == 'code'):
+        code = [c for c in notebook['cells'] if c['cell_type'] == 'code']
+        if name in ACADEMIC_NOTEBOOKS:
+            if not code or any(not c.get('outputs') or c.get('execution_count') != i for i, c in enumerate(code, 1)):
+                errors.append('notebook acadêmico precisa de execução completa e sequencial')
+            if any(o.get('output_type') == 'error' for c in code for o in c.get('outputs', [])):
+                errors.append('notebook acadêmico contém erro de execução')
+        elif any(c.get('outputs') or c.get('execution_count') is not None for c in code):
             errors.append('notebook com saídas; revisar e limpar antes do push')
+    if name == ACADEMIC_PANEL:
+        rows = list(csv.DictReader(io.StringIO(content)))
+        from fire_risk.submission import DICTIONARY
+        if not rows or set(rows[0]) != set(DICTIONARY):
+            errors.append('painel acadêmico diverge do esquema fechado')
     return errors
 
 
@@ -50,6 +73,25 @@ def main(staged=False):
         revision = ':' + name if staged else 'HEAD:' + name
         contents = subprocess.check_output(['git', 'show', revision], cwd=ROOT)
         findings.extend((name, error) for error in check_file(ROOT, name, contents))
+    revision = ':' if staged else 'HEAD:'
+    all_names = subprocess.check_output(['git', 'ls-files', '-z'] if staged else
+        ['git', 'ls-tree', '-r', '--name-only', '-z', 'HEAD'], cwd=ROOT).decode().split('\0')
+    if ACADEMIC_PANEL in all_names:
+        from fire_risk.submission import read_panel, sha256_bytes
+        manifest = json.loads(subprocess.check_output(['git', 'show', revision + 'submission/manifest.json'], cwd=ROOT))
+        for name, expected in manifest['files'].items():
+            if '..' in Path(name).parts or not name.startswith(('submission/', 'docs/')):
+                findings.append((name, 'caminho inválido no manifesto'))
+                continue
+            contents = subprocess.check_output(['git', 'show', revision + name], cwd=ROOT)
+            if sha256_bytes(contents) != expected:
+                findings.append((name, 'hash do artefato divergente no índice/revisão'))
+        panel_contents = subprocess.check_output(['git', 'show', revision + ACADEMIC_PANEL], cwd=ROOT)
+        if manifest['files'].get(ACADEMIC_PANEL) != sha256_bytes(panel_contents):
+            findings.append((ACADEMIC_PANEL, 'painel ausente ou divergente do manifesto'))
+        frame = read_panel(io.BytesIO(panel_contents))
+        if len(frame) != manifest['rows'] or frame['split'].value_counts().to_dict() != manifest['splits']:
+            findings.append((ACADEMIC_PANEL, 'contagem ou partições divergentes'))
     for name, error in findings:
         print(f'{name}: {error}')
     if findings:

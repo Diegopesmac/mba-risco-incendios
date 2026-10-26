@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "source": "course",
+  "contract_sha256": "a6627a0561ae4974ae819093fb0a8bdb1d7b31fa3b0f473f3adc1780b0ff3d2e",
+  "files": [
+    {
+      "file": "BDMEP-estacao.csv",
+      "sha256": "2183def179a3ef349fd304b4f4e7aa6a3849ea8138670cae0ffbe71782e7767d",
+      "bytes": 48730
+    },
+    {
+      "file": "MapBiomas.csv",
+      "sha256": "a902b3d20d00938e00c61ac69568aa034ff22397bfae8fb401f7b81f75107f5a",
+      "bytes": 142649652
+    },
+    {
+      "file": "BDMEP-2025.csv",
+      "sha256": "5505bf0e723a16575f28ba5bfb50dd5632c4e219ea35cd6026929cb6a07cff6b",
+      "bytes": 466359685
+    },
+    {
+      "file": "queimadas_2024_2025.csv",
+      "sha256": "1ba34802bce6fadcac1f3e6d4bd4c2caeea303de82001b461e6944bd6fbd49be",
+      "bytes": 953579515
+    }
+  ],
+  "verified_at": "2026-10-25T19:14:45.572334+00:00",
+  "external_validation": "not_applicable"
+}

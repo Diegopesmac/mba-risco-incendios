@@ -8,7 +8,7 @@
       "status": "not_applicable"
     },
     "entrega1": {
-      "status": "preparation"
+      "status": "prepared_not_submitted"
     },
     "entrega2": {
       "status": "evaluated_not_submitted",

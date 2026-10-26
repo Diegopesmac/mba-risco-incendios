@@ -17,6 +17,7 @@ data/
 models/
 outputs/
 *.csv
+!submission/painel_modelagem.csv
 *.parquet
 *.duckdb*
 *.sqlite*

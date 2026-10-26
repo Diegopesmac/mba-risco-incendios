@@ -4,7 +4,7 @@ Protótipo acadêmico FastAPI para classificar o índice observado. Não é serv
 
 ## Serviço publicado
 
-Endereço: [mba-risco-incendios.onrender.com](https://mba-risco-incendios.onrender.com). [Documentação interativa](https://mba-risco-incendios.onrender.com/docs) e [saúde](https://mba-risco-incendios.onrender.com/health). Publicação no Render gratuito em 25/10/2026, modelo `852606b93da31ade`, código de serviço no commit `aed300aac30b48018744ba1d0c913ee8d314d356` da branch `work/feat-conclusao-caminho2`.
+Endereço: [mba-risco-incendios.onrender.com](https://mba-risco-incendios.onrender.com). [Documentação interativa](https://mba-risco-incendios.onrender.com/docs) e [saúde](https://mba-risco-incendios.onrender.com/health). Publicação no Render gratuito em 25/10/2026, modelo `852606b93da31ade`, atualizada para o commit `f15f79870ac78286606eb2426d540f42064b55ac` da `main`, incluindo validação das datas extremas. A evidência acadêmica incluída está em `submission/evidence/deployment.json`.
 
 Verificação pública com dados fictícios: saúde 200 com modelo identificado, previsão 200 com probabilidades somando 1 e entrada com umidade inválida rejeitada com 422. O painel confirmou `Deploy succeeded | Live`. O teste HTTP local e o teste do container no CI continuam evidências separadas. Atualizações posteriores de documentação não alteram o serviço sem uma publicação manual.
 
