@@ -13,6 +13,7 @@ sys.path.insert(0, str(ROOT / 'scripts'))
 from fire_risk.submission import (DICTIONARY, PANEL_FILE, NOTEBOOKS, read_panel,
                                   sha256_bytes, training_correlations, verify_submission)
 from check_publication import check_file
+from build_submission import export_evidence
 
 
 def synthetic():
@@ -33,6 +34,27 @@ def synthetic():
 
 
 class SubmissionTest(unittest.TestCase):
+    def test_reconstruction_without_deploy_does_not_reuse_old_publication(self):
+        with tempfile.TemporaryDirectory(dir=ROOT / '.local') as temp:
+            folder = Path(temp)
+            source, output = folder / 'source', folder / 'exported'
+            for name in ['manifest.json', 'panel-summary.json', 'prepared/resumo_preparacao.json',
+                         'optimization/results.json', 'final/freeze.json', 'final/evaluation.json']:
+                path = source / name
+                path.parent.mkdir(exist_ok=True, parents=True)
+                path.write_bytes(b'{"fixture":true}\r\n')
+            output.mkdir()
+            (output / 'deployment.json').write_text('{"status":"live"}', encoding='utf-8')
+            export_evidence(source, output)
+            record = json.loads((output / 'deployment.json').read_text(encoding='utf-8'))
+            self.assertEqual(record['status'], 'not_deployed')
+            self.assertFalse(record['http_verified'])
+            self.assertEqual((output / 'freeze.json').read_bytes(), (source / 'final/freeze.json').read_bytes())
+            original = b'{"status":"live","http_verified":true}\r\n'
+            (source / 'deployment.json').write_bytes(original)
+            export_evidence(source, output)
+            self.assertEqual((output / 'deployment.json').read_bytes(), original)
+
     def test_csv_roundtrip_preserves_zero_prefix_and_rejects_schema_and_labels(self):
         frame = synthetic()
         loaded = read_panel(io.StringIO(frame.to_csv(index=False)))

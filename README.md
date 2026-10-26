@@ -48,6 +48,8 @@ Manifesto, bancos e derivados ficam em `.local/course/`. A preparação confirma
 
 A reconstrução completa é destinada a um ambiente novo com os quatro CSVs. No checkout da avaliação já congelada, apenas `build_submission.py` reapresenta resultados existentes; não apague o congelamento nem execute nova otimização. Para compor o ZIP da revisão Git já conferida, use `python scripts/package_submission.py`.
 
+Se a reconstrução ainda não tiver registro local de publicação, a entrega registra `not_deployed` e `http_verified=false`. Isso não reutiliza a evidência da API do modelo anterior nem exige publicar um novo serviço para gerar os notebooks.
+
 ## Documentação
 
 - [Arquitetura](docs/architecture.md)

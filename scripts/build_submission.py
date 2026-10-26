@@ -22,6 +22,27 @@ from fire_risk.submission import DICTIONARY, NOTEBOOKS, PANEL_FILE, read_panel, 
 from submission_notebooks import AUDIT, EDA, MODELS, FINAL
 
 
+def export_evidence(folder, destination):
+    files = {
+        'manifest.json': 'manifest.json', 'panel-summary.json': 'panel-summary.json',
+        'prepared/resumo_preparacao.json': 'resumo_preparacao.json',
+        'optimization/results.json': 'optimization.json', 'final/freeze.json': 'freeze.json',
+        'final/evaluation.json': 'evaluation.json',
+    }
+    destination.mkdir(exist_ok=True, parents=True)
+    for source, name in files.items():
+        (destination / name).write_bytes((folder / source).read_bytes())
+    deployment = folder / 'deployment.json'
+    output = destination / 'deployment.json'
+    if deployment.is_file():
+        output.write_bytes(deployment.read_bytes())
+    else:
+        output.write_text(json.dumps({
+            'status': 'not_deployed', 'http_verified': False,
+            'note': 'Reconstrução local sem registro de publicação; não comprova API ativa para este modelo.'
+        }, ensure_ascii=False, indent=2) + '\n', encoding='utf-8', newline='\n')
+
+
 def execute_notebook(notebook, cwd):
     namespace = {}
     previous = Path.cwd()
@@ -80,15 +101,7 @@ def build(root=ROOT):
                    'A base é derivada dos quatro arquivos fornecidos pelo curso, sem nomes de pessoas, credenciais ou registros individuais de detecção. '
                    'Esta cópia acompanha a avaliação no repositório privado; não concede licença de redistribuição pública dos originais.']
     (root / 'docs/data-dictionary.md').write_text('\n'.join(dictionary) + '\n', encoding='utf-8', newline='\n')
-    evidence_files = {
-        'manifest.json': 'manifest.json', 'panel-summary.json': 'panel-summary.json',
-        'prepared/resumo_preparacao.json': 'resumo_preparacao.json',
-        'optimization/results.json': 'optimization.json', 'final/freeze.json': 'freeze.json',
-        'final/evaluation.json': 'evaluation.json', 'deployment.json': 'deployment.json',
-    }
-    (destination / 'evidence').mkdir(exist_ok=True)
-    for source, name in evidence_files.items():
-        (destination / 'evidence' / name).write_bytes((folder / source).read_bytes())
+    export_evidence(folder, destination / 'evidence')
     files = [root / PANEL_FILE, root / 'docs/data-dictionary.md',
              *sorted((destination / 'evidence').glob('*.json'))]
     manifest = {
