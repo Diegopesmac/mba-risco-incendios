@@ -27,6 +27,7 @@ CSVs do curso → contrato/hash → preparação exploratória → painel rotula
 - `notebooks/course/`: auditoria e narrativa exploratória; regras críticas ficam em código reutilizável.
 - `src/fire_risk/submission.py`: leitura e validação do painel entregue, dicionário e correlações restritas ao treino, sem dependência do treinamento.
 - `scripts/build_submission.py` e `submission_notebooks.py`: exportação e execução dos quatro notebooks com evidências congeladas; `package_submission.py`: ZIP da revisão Git.
+- `gerar_notebook_eda_queimadas.py`: entrada compatível que encaminha à geração canônica da entrega, sem recriar a exploração inicial obsoleta.
 - `submission/`: painel municipal derivado, evidências e manifesto necessários para reproduzir a apresentação acadêmica. Recorte privado definido na ADR 0003.
 - `.local/`: dados, resultados, bancos, modelos e execuções não versionados.
 - `sources.py`, `coverage.py` e rotinas de base externa: ferramentas independentes, fora do fluxo ativo do curso.

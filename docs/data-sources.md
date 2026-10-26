@@ -8,7 +8,7 @@ A análise cobre todas as quatro bases. A legenda MapBiomas recebida não corres
 
 Os tópicos abaixo são referências independentes de fontes externas e não integram a aquisição ativa do curso.
 
-Pesquisa em 20/10/2026. As fontes abaixo foram consultadas diretamente; escolha acadêmica ainda pendente.
+Investigação histórica de 20/10/2026, anterior à adoção definitiva dos dados do curso. As alternativas abaixo não integram o painel entregue e não representam pendências do Caminho 2; a mudança de escopo está registrada na ADR 0002.
 
 ## INPE — arquivos anuais do satélite de referência
 

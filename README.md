@@ -64,6 +64,10 @@ Se a reconstrução ainda não tiver registro local de publicação, a entrega r
 - [API e publicação](docs/deployment.md)
 - [Plano A/B](docs/ab-plan.md)
 
+## Material histórico fora da entrega
+
+A investigação de base externa do Caminho 4 foi encerrada com a adoção dos dados do curso. A ADR 0001, o notebook 00, a proposta de Entrega 0 e o diagnóstico regional são registros dessa alternativa, identificados como históricos. A Entrega 0 não se aplica ao escopo atual. Para avaliação, seguir os quatro notebooks indicados em **Entrega para avaliação**.
+
 ## Estado e limites
 
 Preparação, comparação de três famílias, otimização temporal, avaliação final congelada, explicabilidade, análise por grupos e custos simulados executados. O modelo final obteve F1 macro 0,4097 e recall alto 0,5690 no teste temporal de 310 exemplos. API publicada no Render e verificada por HTTP em 25/10/2026: saúde 200, previsão 200 e entrada inválida 422, com o modelo final `852606b93da31ade`. Entrega 0 não aplicável aos dados do curso; entregas 1 e 2 ainda não submetidas.
