@@ -27,6 +27,7 @@ def build():
     path = ROOT / '.local/candidates/manifest.json'
     data = json.loads(path.read_text(encoding='utf-8'))
     lines = ['# Entrega 0 — proposta para validação', '',
+             '**Documento histórico do Caminho 4, fora da entrega atual.** A base externa não foi adotada. O escopo vigente é o Caminho 2 com dados do curso, para o qual a Entrega 0 não se aplica; consultar o README e a ADR 0002. O status abaixo registra somente essa investigação anterior.', '',
              '**Status: em preparação; não aprovada pela tutoria.**', '',
              '## Problema e público', '',
              'Investigar previsão regional de detecções de fogo para apoiar priorização preventiva por gestores e equipes ambientais. A saída pretendida é baixo/médio/alto, com definição do alvo e interpretação operacional ainda a validar.', '',
@@ -81,7 +82,7 @@ import pandas as pd
 manifesto=json.loads((ROOT/'.local/candidates/manifest.json').read_text(encoding='utf-8'))
 print('Aprovação da tutoria: pendente. Alvo: não definido.')
 """
-    cells = [nbformat.v4.new_markdown_cell('# Entrega 0 — validação inicial da base externa\n\nMini-notebook para discussão com a tutoria. Datas, campos e contagens são observados; a base ainda não é um painel supervisionado aprovado.'),
+    cells = [nbformat.v4.new_markdown_cell('# Entrega 0 — investigação histórica de base externa\n\n**Fora da entrega atual.** Este mini-notebook registra a alternativa do Caminho 4, não adotada. O escopo vigente é o Caminho 2 com dados do curso; a Entrega 0 não se aplica. Consultar o README para os quatro notebooks finais. As pendências descritas abaixo pertencem somente à investigação histórica.'),
              nbformat.v4.new_code_cell(setup),
              nbformat.v4.new_code_cell("""partes=[]
 for item in manifesto['files']:

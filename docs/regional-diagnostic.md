@@ -1,5 +1,7 @@
 # Diagnóstico regional da base candidata
 
+**Material histórico do Caminho 4, fora da entrega atual.** O projeto final utiliza os dados do curso no Caminho 2, conforme a [ADR 0002](decisions/0002-base-curso.md). As decisões pendentes descritas abaixo pertencem somente à investigação da base externa e não bloqueiam o painel já entregue.
+
 Executar `python scripts/diagnose_regions.py` depois da aquisição e auditoria. O diagnóstico compara a candidata com um calendário completo por UF, sem escolher regiões em função de terem apresentado detecções. As 27 unidades são fixadas pelo [cadastro oficial do IBGE](https://servicodados.ibge.gov.br/api/v1/localidades/estados), consultado em 20/10/2026. Essa população serve ao diagnóstico; a unidade final da previsão depende da decisão científica e da tutoria.
 
 ## Contrato da saída local

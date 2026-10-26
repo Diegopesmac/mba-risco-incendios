@@ -32,21 +32,15 @@ python scripts/smoke_api.py --url http://127.0.0.1:8000 --request configs/exampl
 
 A imagem usa usuário sem privilégios e contém código e dependências, sem dados brutos ou modelo. A construção e o teste HTTP do container usam bundle fictício no CI. A inferência do modelo acadêmico final foi verificada separadamente por HTTP local e no endereço público do Render.
 
-## Railway gratuito
-
-Selecionar somente o repositório do projeto e a branch da entrega. O Dockerfile da raiz fornece construção e inicialização, sem substituir o comando de partida. Configurar health check `/health` e domínio público apontando para a porta `PORT` do provedor.
+## Configuração do modelo no Render
 
 O modelo é fornecido por configuração do operador: `MODEL_PAYLOAD_B64` contém o bundle codificado e `MODEL_MANIFEST_SHA256` o SHA-256 dos bytes do manifesto. Não incluir o arquivo de configuração no Git. `scripts/start_api.py` materializa o bundle e verifica manifesto e hash do modelo antes de carregar. Codificação base64 não é criptografia; hash confirma integridade, não origem. Somente artefatos confiáveis podem ser carregados, pois joblib utiliza pickle.
-
-O Railway oferece teste sem cartão, com US$ 5 em créditos por até 30 dias, seguido de plano gratuito com US$ 1 de crédito mensal. O consumo pode esgotar o saldo antes do prazo; não há garantia de disponibilidade contínua nesse orçamento. Conferir saldo e acesso próximo à avaliação, sem contratação automática de plano pago. Condições consultadas em 25/10/2026 na [documentação de teste](https://docs.railway.com/pricing/free-trial) e [planos](https://docs.railway.com/pricing/plans).
-
-Em 25/10/2026, a [página de status do provedor](https://status.railway.com/) informa suspensão temporária de novos cadastros. A publicação no Railway não foi concluída. O projeto foi publicado no Render; a disponibilidade do cadastro precisa ser conferida antes de usar as instruções do Railway como alternativa.
 
 Depois da publicação, executar `scripts/smoke_api.py` contra o domínio público com exemplo fictício e guardar o resultado local. A URL ativa deve acompanhar a entrega; configurar o serviço não prova que a inferência esteja funcionando.
 
 ## Configuração do Render
 
-`render.yaml` preserva a configuração Docker gratuita, com health check `/health` e implantação automática desligada. As mesmas duas variáveis transportam o bundle. A verificação de cartão foi concluída diretamente pelo responsável, e o serviço foi criado e publicado. O plano gratuito pode suspender o processo por inatividade, com demora de 50 segundos ou mais na primeira resposta. Ver [limitações do Render](https://render.com/docs/free).
+`render.yaml` preserva a configuração Docker gratuita, com health check `/health` e implantação automática desligada. As mesmas duas variáveis transportam o bundle. O plano gratuito pode suspender o processo por inatividade, com demora de 50 segundos ou mais na primeira resposta. Ver [limitações do Render](https://render.com/docs/free).
 
 ## Limites de operação
 

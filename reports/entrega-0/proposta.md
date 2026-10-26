@@ -1,5 +1,7 @@
 # Entrega 0 — proposta para validação
 
+**Documento histórico do Caminho 4, fora da entrega atual.** A base externa não foi adotada. O escopo vigente é o Caminho 2 com dados do curso, para o qual a Entrega 0 não se aplica; consultar o README e a ADR 0002. O status abaixo registra somente essa investigação anterior.
+
 **Status: em preparação; não aprovada pela tutoria.**
 
 ## Problema e público
