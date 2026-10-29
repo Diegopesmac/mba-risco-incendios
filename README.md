@@ -17,7 +17,7 @@ Os quatro notebooks abaixo estão executados, com tabelas e gráficos no própri
 
 A [base consolidada de 1.329 linhas](submission/painel_modelagem.csv) e o [dicionário das 17 colunas](docs/data-dictionary.md) acompanham a entrega. `submission/manifest.json` vincula a base e as evidências por hash. Os CSVs originais e os modelos binários não são redistribuídos. Esta cópia do painel destina-se à avaliação no repositório privado.
 
-Para executar a apresentação, instale as dependências abaixo e abra os notebooks em qualquer pasta dentro do clone ou ZIP extraído. Eles usam somente o painel e as evidências incluídas, sem as pastas da máquina original, dados brutos ou treinamento. Leem resultados científicos já congelados. A correlação complementar usa somente o treino e não modifica o modelo escolhido.
+Para executar a apresentação, instale as dependências abaixo e abra os notebooks em qualquer pasta dentro do clone ou ZIP extraído. Eles usam somente o painel e as evidências incluídas, sem as pastas da máquina original, dados brutos. O notebook 03 reproduz ajuste em desenvolvimento e compara persistência e pesos de classe; a avaliação final continua sendo o registro congelado. A correlação complementar usa somente o treino e não modifica o modelo escolhido.
 
 ```sh
 python -m pip install -r requirements.txt
@@ -46,7 +46,7 @@ python scripts/check_publication.py
 
 Manifesto, bancos e derivados ficam em `.local/course/`. A preparação confirma duplicatas por igualdade exata, reserva horários divergentes, preserva ausências e distingue precipitação parcial de 24 horas completas. As rotinas e os notebooks em `notebooks/course/` contêm auditoria e EDA dos quatro arquivos.
 
-A reconstrução completa é destinada a um ambiente novo com os quatro CSVs. No checkout da avaliação já congelada, apenas `build_submission.py` reapresenta resultados existentes; não apague o congelamento nem execute nova otimização. Para compor o ZIP da revisão Git já conferida, use `python scripts/package_submission.py`.
+A reconstrução completa é destinada a um ambiente novo com os quatro CSVs. No checkout da avaliação já congelada, `build_submission.py` reapresenta a avaliação final e executa comparações complementares somente em desenvolvimento; não apague o congelamento nem execute nova otimização. Para compor o ZIP da revisão Git já conferida, use `python scripts/package_submission.py`.
 
 Se a reconstrução ainda não tiver registro local de publicação, a entrega registra `not_deployed` e `http_verified=false`. Isso não reutiliza a evidência da API do modelo anterior nem exige publicar um novo serviço para gerar os notebooks.
 
@@ -77,3 +77,5 @@ Os comandos de otimização devem ser executados antes de congelar a avaliação
 Meteorologia e queimadas têm apenas 43 dias de sobreposição. O significado das 28 classes MapBiomas não é inferido da legenda incompatível do material. Variáveis obtidas na detecção futura ou no fim do dia previsto não entram como features. O trabalho não é um serviço oficial de alerta.
 
 Repositório privado. O painel derivado e os notebooks executados integram a entrega acadêmica. Abertura pública, licença, redistribuição dos originais e alteração do serviço exigem revisão própria.
+
+Revisão do tutor: persistência D−2 no painel elegível obteve F1 macro 0,5115 na validação, acima de 0,4528 da logística otimizada. Pesos balanceados ajudam frente aos uniformes, mas não eliminam essa diferença. A otimização não demonstrou ganho relevante. Os notebooks mostram a comparação executável e os limites; a API acrescenta aviso explícito de extrapolação, ainda sujeito a implantação.

@@ -44,5 +44,6 @@ class ModelService:
                 'model_id': self.metadata['model_id'], 'modelo': self.metadata['selected'],
                 'municipio_presente_no_desenvolvimento': municipality in self.metadata['municipalities'],
                 'variaveis_fora_faixa_desenvolvimento': extrapolated,
+                'aviso_extrapolacao': ('Entrada fora do domínio de desenvolvimento: probabilidades não representam confiança validada. Não utilizar para decisões operacionais.' if extrapolated or municipality not in self.metadata['municipalities'] else None),
                 'uso_operacional_validado': False,
                 'interpretacao': 'Classes do índice registrado, condicionadas à amostragem de detecções; probabilidades do modelo não são probabilidades físicas de incêndio.'}

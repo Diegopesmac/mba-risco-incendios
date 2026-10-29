@@ -37,3 +37,5 @@ Features, treinamento, avaliação e API recebem contratos explícitos. A API ca
 ## Dependências e reprodução
 
 Python 3.12; pandas, NumPy, DuckDB, Matplotlib, SciPy e nbformat na preparação; scikit-learn/joblib no modelo; Optuna na busca; FastAPI/Uvicorn no serviço. `requirements-api.txt` separa dependências de inferência. A API importa o contrato de features do painel, sem executar preparação; por isso DuckDB também faz parte do ambiente de inferência. Nenhuma estatística aprendida usa o teste final. Os resultados registrados podem ser apresentados novamente sem reabrir a seleção.
+
+Revisão acadêmica: `revision.py` implementa persistência D−2 e comparação de pesos somente em desenvolvimento. O gerador usa IPython/inline para capturar saídas nativas; a lógica científica congelada permanece vinculada aos hashes originais.

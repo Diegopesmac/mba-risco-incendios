@@ -35,3 +35,11 @@ Resultados por prefixo de UF, semana e cobertura de estações acompanham contag
 Matriz fictícia de penalidades, definida antes do teste: custo simulado total de R$ 5.930 contra R$ 13.150 da referência em 310 decisões sobre o índice. São valores hipotéticos, não economia real ou incêndios evitados. Doze cenários variam penalidades de subestimação e excesso de alerta. O [plano A/B](ab-plan.md) descreve experimento futuro em modo sombra, ainda não executado.
 
 A API sinaliza valores fora das faixas de desenvolvimento e municípios novos, sem tornar essas previsões validadas. Atualizações exigem novo protocolo de desenvolvimento e teste independente. Fontes e população devem ser revistas antes de qualquer extensão operacional.
+
+## Revisão do tutor
+
+Na validação comum de 183 exemplos, persistência da última classe do município até D−2 obteve F1 macro 0,5115, superior à logística otimizada (0,4528). Histórico restrito ao painel elegível; oito exemplos sem histórico usam a classe majoritária do treino. Disponibilidade dos rótulos em D−2 é assumida. A comparação é sequencial, com observações anteriores liberadas pelo corte temporal.
+
+A logística sem pesos obteve 0,3813 e com pesos balanceados, 0,4429. O balanceamento já existia e melhora essa comparação, mas não resolve a mudança temporal: alto passa de 31,7% no treino para 17,5% na validação. Teste mantém sua distribuição original. O ganho de otimização (~0,010) não demonstrou relevância ou estabilidade. Não há evidência de superioridade do modelo sobre persistência.
+
+Análise complementar posterior ao feedback, restrita ao desenvolvimento, sem promoção de outro modelo nem nova seleção pelo teste observado. Uma promoção exige avaliação independente. Notebook 03 executa essas comparações; notebook 04 preserva o resultado histórico.

@@ -26,7 +26,7 @@ Seleção por F1 macro da validação, desempate por recall alto e nome. A refer
 
 Artefatos locais em joblib, com hash por modelo e versões fixadas; carregar somente arquivos produzidos e conferidos pelo próprio fluxo. Joblib utiliza pickle e não é formato seguro para arquivos não confiáveis, conforme [documentação scikit-learn](https://scikit-learn.org/stable/model_persistence.html). Hash verifica integridade contra o manifesto, não autentica sua origem. Não redistribuir modelos ou dados automaticamente.
 
-O notebook versionado `notebooks/course/03_painel_modelos_curso.ipynb` contém saídas da comparação inicial e otimizada. `scripts/build_submission.py` executa as células em sequência e incorpora resultados e gráficos a partir dos registros científicos. O processo não representa uma interação com a interface Jupyter ao vivo nem repete a busca de parâmetros.
+O notebook versionado `notebooks/course/03_painel_modelos_curso.ipynb` contém saídas da comparação inicial e otimizada. `scripts/build_submission.py` executa as células em sequência e captura tabelas e gráficos nativos do IPython; o notebook 03 chama compare_models e development_review, e a avaliação final usa os registros científicos. O processo não representa uma interação com a interface Jupyter ao vivo nem repete a busca de parâmetros.
 
 ## Otimização e congelamento
 
