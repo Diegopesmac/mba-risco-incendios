@@ -17,9 +17,11 @@
     "submission/evidence/deployment.json": "e390850a7c16b218cf8de15eaa424984ef324fc673bd546fd82e5d0117bef8ec",
     "submission/evidence/evaluation.json": "43c787640d4c41ee07c8c2868f071d4594d3147f0f8f8ac6d06f6573a54a0cab",
     "submission/evidence/freeze.json": "4a501f4bd126740141053c4fb1403ceee7fd20611dcacebc8ebf5944fc9e7ad7",
+    "submission/evidence/label-history.json": "37dd9e613f43bb9770e80f8e2a9389ca24586fe395af4274d09099aad48b6c17",
     "submission/evidence/manifest.json": "aca2dfc776f1f198874ba1a35cd620370bcb51e02bf01b0a700c19f9f8298c73",
     "submission/evidence/optimization.json": "6c8eb26ef8ba801b4635f117aafe496929dd96152f9bbd6b9ecad5a142dbc9c3",
     "submission/evidence/panel-summary.json": "3a598bb64ed025a417f6a60c5fb147c735ef72fdb918e48b04e607ff2213136f",
-    "submission/evidence/resumo_preparacao.json": "1be5168b4b4603060ce50d4b147404765fc8f9b3b69da59b2bd42b1add7878be"
+    "submission/evidence/resumo_preparacao.json": "1be5168b4b4603060ce50d4b147404765fc8f9b3b69da59b2bd42b1add7878be",
+    "submission/evidence/revision.json": "01878bf075283b83b95c40fa5cd7d45363cfb6a144640e33ffa2a10b18d40184"
   }
 }

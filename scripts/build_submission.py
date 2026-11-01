@@ -1,9 +1,6 @@
 """Exporta o painel revisado e executa os quatro notebooks da entrega."""
 from pathlib import Path
 import argparse
-import base64
-import contextlib
-import io
 import json
 import os
 import sys
@@ -19,7 +16,6 @@ import pandas as pd
 from fire_risk.artifacts import read_json
 from fire_risk.finalization import verify_freeze
 from fire_risk.submission import DICTIONARY, NOTEBOOKS, PANEL_FILE, read_panel, sha256_bytes
-from submission_notebooks import AUDIT, EDA, MODELS, FINAL
 
 
 def export_evidence(folder, destination):
@@ -44,22 +40,31 @@ def export_evidence(folder, destination):
 
 
 def execute_notebook(notebook, cwd):
-    namespace = {}
+    from IPython.terminal.interactiveshell import TerminalInteractiveShell
+    from IPython.utils.capture import capture_output
+    shell = TerminalInteractiveShell.instance()
+    shell.reset(new_session=False)
+    shell.display_formatter.active_types = ['text/plain', 'text/html', 'image/png']
+    from IPython.core.displaypub import CapturingDisplayPublisher
+    publisher = CapturingDisplayPublisher(shell=shell)
+    shell.display_pub = publisher
     previous = Path.cwd()
     try:
         os.chdir(cwd)
         for count, cell in enumerate((c for c in notebook.cells if c.cell_type == 'code'), 1):
-            output = io.StringIO()
-            with contextlib.redirect_stdout(output):
-                exec(compile(cell.source, '<academic-notebook>', 'exec'), namespace)
+            publisher.outputs.clear()
+            with capture_output(display=False) as captured:
+                result = shell.run_cell(cell.source, store_history=False)
+            result.raise_error()
             cell.execution_count = count
-            cell.outputs = [nbformat.v4.new_output('stream', name='stdout', text=output.getvalue())]
-            for number in plt.get_fignums():
-                data = io.BytesIO()
-                plt.figure(number).savefig(data, format='png', dpi=120, bbox_inches='tight')
-                cell.outputs.append(nbformat.v4.new_output('display_data', data={
-                    'image/png': base64.b64encode(data.getvalue()).decode('ascii')}))
-                plt.close(number)
+            cell.outputs = []
+            for stream, value in [('stdout', captured.stdout), ('stderr', captured.stderr)]:
+                if value:
+                    cell.outputs.append(nbformat.v4.new_output('stream', name=stream, text=value))
+            for output in publisher.outputs:
+                cell.outputs.append(nbformat.v4.new_output('display_data', data=output['data'], metadata=output.get('metadata', {})))
+            if not cell.outputs:
+                cell.outputs.append(nbformat.v4.new_output('stream', name='stdout', text=''))
         nbformat.validate(notebook)
         return notebook
     finally:
@@ -113,17 +118,9 @@ def build(root=ROOT):
     }
     (destination / 'manifest.json').write_text(
         json.dumps(manifest, ensure_ascii=False, indent=2) + '\n', encoding='utf-8', newline='\n')
-    for name, sections in zip(NOTEBOOKS, (AUDIT, EDA, MODELS, FINAL)):
-        cells = []
-        for index, (kind, text) in enumerate(sections):
-            if kind == 'code':
-                compile(text, '<academic-notebook>', 'exec')
-            factory = nbformat.v4.new_code_cell if kind == 'code' else nbformat.v4.new_markdown_cell
-            cells.append(factory(text, id=f'academic-{index:02}'))
-        notebook = nbformat.v4.new_notebook(cells=cells, metadata={
-            'kernelspec': {'name': 'python3', 'display_name': 'Python 3', 'language': 'python'}})
+    for name in NOTEBOOKS:
         path = root / name
-        path.parent.mkdir(exist_ok=True, parents=True)
+        notebook = nbformat.read(path, as_version=4)
         execute_notebook(notebook, path.parent)
         nbformat.write(notebook, path)
     verify_freeze(root)

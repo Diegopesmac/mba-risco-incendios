@@ -45,3 +45,5 @@ Depois da publicação, executar `scripts/smoke_api.py` contra o domínio públi
 ## Limites de operação
 
 O acesso público é destinado à avaliação acadêmica, sem autenticação e sem compromisso de disponibilidade. Não enviar dados pessoais ou operacionais. O servidor não grava as entradas em arquivo; políticas de retenção e registros da infraestrutura pertencem ao provedor. Suspender ou remover o serviço reverte a publicação; isso não altera os CSVs nem o modelo congelado.
+
+A resposta inclui `aviso_extrapolacao` explícito para município desconhecido ou feature fora das faixas. Probabilidade alta nesse caso não representa confiança validada. `null` indica somente ausência desses dois alertas, não validação operacional. O exemplo usa um município presente no desenvolvimento e medianas das features, combinadas sinteticamente dentro das faixas; demonstra o contrato e não é uma observação real nem previsão validada. A revisão precisa ser implantada manualmente para chegar ao serviço público.

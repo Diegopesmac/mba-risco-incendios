@@ -1,9 +1,9 @@
 {
-  "municipio": "0000000",
+  "municipio": "1100049",
   "data_alvo": "2025-02-04",
   "data_meteorologia": "2025-02-02",
   "chuva_d2": 0.0,
-  "temperatura_d2": 1.0,
-  "umidade_d2": 2.0,
-  "vento_d2": 3.0
+  "temperatura_d2": 26.15,
+  "umidade_d2": 75.0,
+  "vento_d2": 1.6958
 }

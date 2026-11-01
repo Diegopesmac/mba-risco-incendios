@@ -93,6 +93,9 @@ class ApiTest(unittest.TestCase):
         response = self.client.post('/predict', json={**self.request, 'municipio':'9999999','temperatura_d2':50.0}).json()
         self.assertFalse(response['municipio_presente_no_desenvolvimento'])
         self.assertIn('temperatura_d2', response['variaveis_fora_faixa_desenvolvimento'])
+        self.assertIn('confiança', response['aviso_extrapolacao'])
+        regular = self.client.post('/predict', json=self.request).json()
+        self.assertIsNone(regular['aviso_extrapolacao'])
 
 
 if __name__ == '__main__':

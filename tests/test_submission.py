@@ -34,6 +34,22 @@ def synthetic():
 
 
 class SubmissionTest(unittest.TestCase):
+    def test_notebook_execution_keeps_native_tables_and_figures(self):
+        import nbformat
+        from build_submission import execute_notebook
+        notebook = nbformat.v4.new_notebook(cells=[nbformat.v4.new_code_cell(
+            "get_ipython().run_line_magic('matplotlib', 'inline')\n"
+            "import pandas as pd\nfrom IPython.display import display\n"
+            "import matplotlib.pyplot as plt\n"
+            "display(pd.DataFrame({'valor':[1,2]}))\nplt.plot([1,2]); plt.show()")])
+        execute_notebook(notebook, ROOT)
+        outputs = notebook.cells[0].outputs
+        self.assertTrue(any('text/html' in o.get('data', {}) for o in outputs))
+        self.assertTrue(any('image/png' in o.get('data', {}) for o in outputs))
+        broken = nbformat.v4.new_notebook(cells=[nbformat.v4.new_code_cell('raise ValueError("failure")')])
+        with self.assertRaises(ValueError):
+            execute_notebook(broken, ROOT)
+
     def test_reconstruction_without_deploy_does_not_reuse_old_publication(self):
         with tempfile.TemporaryDirectory(dir=ROOT / '.local') as temp:
             folder = Path(temp)
