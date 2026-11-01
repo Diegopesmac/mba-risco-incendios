@@ -38,8 +38,10 @@ A API sinaliza valores fora das faixas de desenvolvimento e municípios novos, s
 
 ## Revisão do tutor
 
-Na validação comum de 183 exemplos, persistência da última classe do município até D−2 obteve F1 macro 0,5115, superior à logística otimizada (0,4528). Histórico restrito ao painel elegível; oito exemplos sem histórico usam a classe majoritária do treino. Disponibilidade dos rótulos em D−2 é assumida. A comparação é sequencial, com observações anteriores liberadas pelo corte temporal.
+Na validação comum de 183 exemplos, persistência da última classe do município até D−2 obteve F1 macro 0,5301, superior à logística otimizada (0,4528). Histórico anterior à junção meteorológica, 23.073 município/dias de desenvolvimento; nenhum fallback foi necessário. Disponibilidade dos rótulos em D−2 é assumida. A comparação é sequencial, com observações anteriores liberadas pelo corte temporal.
 
 A logística sem pesos obteve 0,3813 e com pesos balanceados, 0,4429. O balanceamento já existia e melhora essa comparação, mas não resolve a mudança temporal: alto passa de 31,7% no treino para 17,5% na validação. Teste mantém sua distribuição original. O ganho de otimização (~0,010) não demonstrou relevância ou estabilidade. Não há evidência de superioridade do modelo sobre persistência.
 
 Análise complementar posterior ao feedback, restrita ao desenvolvimento, sem promoção de outro modelo nem nova seleção pelo teste observado. Uma promoção exige avaliação independente. Notebook 03 executa essas comparações; notebook 04 preserva o resultado histórico.
+
+A revisão treina um candidato com intensidade dos pesos escolhida em CV cronológica do treino. Entre potências 0, 0,5, 1 e 1,5, foi selecionada 1: os pesos balanceados existentes já eram a melhor opção dessa comparação. O ajuste foi executado, mas não produziu ganho adicional. Persistência permanece superior; não se afirma que o declínio temporal foi resolvido.

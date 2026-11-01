@@ -26,7 +26,7 @@ def persistence(history, queries, fallback):
     return pd.DataFrame(rows, index=queries.index)
 
 
-def development_review(panel):
+def development_review(panel, history=None):
     # Filtra antes de calcular qualquer estatística ou ajustar modelo.
     development = panel.loc[panel['split'].isin(['train', 'validation', 'gap'])
                             & panel['data'].le(pd.Timestamp('2025-02-02'))].copy()
@@ -34,7 +34,7 @@ def development_review(panel):
     valid = development.loc[development['split'].eq('validation')]
     validate_development(train, valid)
     fallback = train['target'].value_counts().idxmax()
-    predictions = persistence(development, valid, fallback)
+    predictions = persistence(development if history is None else history, valid, fallback)
     results = {'persistencia_d2': prediction_metrics(valid['target'], predictions['predicted'])}
     with threadpool_limits(limits=1):
         for label, weight in [('logistica_sem_pesos', None), ('logistica_balanceada', 'balanced')]:
@@ -45,6 +45,52 @@ def development_review(panel):
     counts = pd.crosstab(development['split'], development['target']).reindex(columns=LABELS, fill_value=0)
     return {'metrics': results, 'class_counts': counts.to_dict(orient='index'),
             'fallback_class': fallback, 'fallback_rows': int(predictions['fallback_used'].sum()),
-            'history_scope': 'painel elegível; não inclui detecções sem meteorologia elegível',
+            'history_scope': 'detecções originais sem filtro meteorológico' if history is not None else 'painel elegível',
             'test_used_for_selection': False,
             'protocol': 'análise complementar após feedback; teste original já observado; sem promoção de modelo'}
+
+
+def build_label_history(fire_path):
+    """Mediana diária de todos os índices válidos, antes de juntar meteorologia."""
+    import duckdb
+    from .panel import risk_class
+    with duckdb.connect() as con:
+        frame = con.execute("""SELECT id_municipio,
+            try_cast(data_hora AS TIMESTAMP)::DATE AS data,
+            median(try_cast(risco_fogo AS DOUBLE)) AS target_index
+            FROM read_csv(?, header=true, delim=';', all_varchar=true)
+            WHERE regexp_full_match(id_municipio, '[0-9]{7}')
+              AND try_cast(data_hora AS TIMESTAMP)::DATE <= DATE '2025-02-02'
+              AND isfinite(try_cast(risco_fogo AS DOUBLE))
+              AND try_cast(risco_fogo AS DOUBLE) BETWEEN 0 AND 1
+            GROUP BY ALL ORDER BY data,id_municipio""", [str(fire_path)]).df()
+    frame['data'] = pd.to_datetime(frame['data'])
+    frame['target'] = frame['target_index'].map(risk_class)
+    return frame[['id_municipio', 'data', 'target']]
+
+
+def tune_balance(train, validation):
+    """Escolhe intensidade dos pesos por CV interna; validação só avalia."""
+    from .optimization import chronological_folds
+    validate_development(train, validation)
+    folds = chronological_folds(train, {'cv_splits':3, 'cv_validation_days':4, 'cv_gap_days':1})
+    powers = (0.0, 0.5, 1.0, 1.5)
+    def fit(frame, power):
+        counts = frame['target'].value_counts()
+        weights = {label: float((len(frame)/(len(LABELS)*counts[label]))**power) for label in LABELS}
+        model = candidates()['logistica'].set_params(logisticregression__class_weight=weights)
+        model.fit(frame[list(FEATURES)], frame['target'])
+        return model, weights
+    with threadpool_limits(limits=1):
+        scores = {}
+        for power in powers:
+            values = []
+            for subset, held_out in folds:
+                model, _ = fit(subset, power)
+                values.append(prediction_metrics(held_out['target'], model.predict(held_out[list(FEATURES)]))['f1_macro'])
+            scores[str(power)] = {'fold_f1':values, 'mean_f1':sum(values)/len(values)}
+        chosen = max(powers, key=lambda power:(scores[str(power)]['mean_f1'], -power))
+        model, weights = fit(train, chosen)
+        result = prediction_metrics(validation['target'], model.predict(validation[list(FEATURES)]))
+    return model, {'selected_power':chosen, 'weights':weights, 'cv':scores, 'validation':result,
+                   'selection_data':'chronological_training_folds_only', 'test_evaluated':False}

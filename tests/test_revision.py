@@ -23,5 +23,28 @@ class RevisionTest(unittest.TestCase):
         panel.loc[panel['split'].eq('test'), ['target','chuva_d2']] = None
         self.assertEqual(before, development_review(panel))
 
+    def test_raw_history_includes_dates_without_weather_and_excludes_test(self):
+        import tempfile
+        from fire_risk.revision import build_label_history
+        with tempfile.TemporaryDirectory() as temp:
+            source = Path(temp)/'fires.csv'
+            source.write_text('id_municipio;data_hora;risco_fogo\n0000001;2024-12-01 00:00:00;0.2\n0000001;2024-12-01 01:00:00;0.8\n0000001;2025-01-01 00:00:00;-999\n0000001;2025-02-04 00:00:00;1\n',encoding='utf-8')
+            result=build_label_history(source)
+            self.assertEqual(len(result),1)
+            self.assertEqual(result.iloc[0]['target'],'medio')
+            self.assertEqual(result.iloc[0]['data'],pd.Timestamp('2024-12-01'))
+
+    def test_balance_selection_does_not_depend_on_validation_labels(self):
+        from fire_risk.revision import tune_balance
+        panel,_=verify_submission(ROOT)
+        train=panel.loc[panel['split'].eq('train')]
+        valid=panel.loc[panel['split'].eq('validation')].copy()
+        _,before=tune_balance(train,valid)
+        valid['target']=valid['target'].map({'baixo':'alto','alto':'medio','medio':'baixo'})
+        _,after=tune_balance(train,valid)
+        self.assertEqual(before['cv'],after['cv'])
+        self.assertEqual(before['weights'],after['weights'])
+        self.assertFalse(after['test_evaluated'])
+
 if __name__ == '__main__':
     unittest.main()

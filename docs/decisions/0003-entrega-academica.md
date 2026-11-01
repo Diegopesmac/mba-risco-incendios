@@ -13,3 +13,5 @@ As evidências JSON são cópias byte a byte dos registros originais, incluindo 
 A apresentação é reproduzível desde o clone ou ZIP sem a organização de diretórios da máquina original. A reconstrução integral desde os quatro CSVs é uma opção separada; ela produz novos registros em um ambiente limpo e não substitui o teste já registrado nesta entrega. Remover esta entrega por reversão de commit não altera a API nem o modelo congelado.
 
 Revisão do tutor: gráficos e tabelas usam execução IPython e backend inline nativos. Comparações complementares vivem em revision.py, sem alterar o código vinculado ao congelamento. Novos resultados de desenvolvimento não promovem automaticamente um modelo.
+
+Os arquivos .ipynb são agora a fonte canônica editável; submission_notebooks.py é somente um leitor de compatibilidade, sem código em strings. build_submission.py executa os notebooks existentes. label-history.json contém somente agregados município/dia anteriores ao teste, extraídos de todas as detecções válidas, incluindo as sem meteorologia elegível; o manifesto vincula os bytes da entrega.

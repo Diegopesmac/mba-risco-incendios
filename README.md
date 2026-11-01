@@ -78,4 +78,6 @@ Meteorologia e queimadas têm apenas 43 dias de sobreposição. O significado da
 
 Repositório privado. O painel derivado e os notebooks executados integram a entrega acadêmica. Abertura pública, licença, redistribuição dos originais e alteração do serviço exigem revisão própria.
 
-Revisão do tutor: persistência D−2 no painel elegível obteve F1 macro 0,5115 na validação, acima de 0,4528 da logística otimizada. Pesos balanceados ajudam frente aos uniformes, mas não eliminam essa diferença. A otimização não demonstrou ganho relevante. Os notebooks mostram a comparação executável e os limites; a API acrescenta aviso explícito de extrapolação, ainda sujeito a implantação.
+Revisão do tutor: persistência D−2 no histórico completo de detecções válidas obteve F1 macro 0,5301 na validação, acima de 0,4528 da logística otimizada. Pesos balanceados ajudam frente aos uniformes, mas não eliminam essa diferença. A otimização não demonstrou ganho relevante. Os notebooks mostram a comparação executável e os limites; a API acrescenta aviso explícito de extrapolação, ainda sujeito a implantação.
+
+A revisão treina um candidato com intensidade dos pesos escolhida em CV cronológica do treino. Entre potências 0, 0,5, 1 e 1,5, foi selecionada 1: os pesos balanceados existentes já eram a melhor opção dessa comparação. O ajuste foi executado, mas não produziu ganho adicional. Persistência permanece superior; não se afirma que o declínio temporal foi resolvido.

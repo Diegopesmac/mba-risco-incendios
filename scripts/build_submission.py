@@ -16,7 +16,6 @@ import pandas as pd
 from fire_risk.artifacts import read_json
 from fire_risk.finalization import verify_freeze
 from fire_risk.submission import DICTIONARY, NOTEBOOKS, PANEL_FILE, read_panel, sha256_bytes
-from submission_notebooks import AUDIT, EDA, MODELS, FINAL
 
 
 def export_evidence(folder, destination):
@@ -119,17 +118,9 @@ def build(root=ROOT):
     }
     (destination / 'manifest.json').write_text(
         json.dumps(manifest, ensure_ascii=False, indent=2) + '\n', encoding='utf-8', newline='\n')
-    for name, sections in zip(NOTEBOOKS, (AUDIT, EDA, MODELS, FINAL)):
-        cells = []
-        for index, (kind, text) in enumerate(sections):
-            if kind == 'code':
-                compile(text, '<academic-notebook>', 'exec')
-            factory = nbformat.v4.new_code_cell if kind == 'code' else nbformat.v4.new_markdown_cell
-            cells.append(factory(text, id=f'academic-{index:02}'))
-        notebook = nbformat.v4.new_notebook(cells=cells, metadata={
-            'kernelspec': {'name': 'python3', 'display_name': 'Python 3', 'language': 'python'}})
+    for name in NOTEBOOKS:
         path = root / name
-        path.parent.mkdir(exist_ok=True, parents=True)
+        notebook = nbformat.read(path, as_version=4)
         execute_notebook(notebook, path.parent)
         nbformat.write(notebook, path)
     verify_freeze(root)
