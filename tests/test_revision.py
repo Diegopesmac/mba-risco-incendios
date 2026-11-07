@@ -33,6 +33,28 @@ class RevisionTest(unittest.TestCase):
             self.assertEqual(len(result),1)
             self.assertEqual(result.iloc[0]['target'],'medio')
             self.assertEqual(result.iloc[0]['data'],pd.Timestamp('2024-12-01'))
+            extended=build_label_history(source, '2025-02-04')
+            self.assertEqual(len(extended),2)
+            self.assertEqual(extended.iloc[-1]['data'],pd.Timestamp('2025-02-04'))
+
+    def test_fixed_test_baseline_uses_d2_and_same_cost_matrix(self):
+        import json
+        from fire_risk.revision import evaluate_test_persistence
+        panel=pd.DataFrame({'id_municipio':['a','b','a','a','b'],
+            'data':pd.to_datetime(['2025-01-01','2025-01-01','2025-02-04','2025-02-05','2025-02-05']),
+            'split':['train','train','test','test','test'], 'target':['baixo','baixo','alto','medio','alto']})
+        history=pd.DataFrame({'id_municipio':['a']*3,
+            'data':pd.to_datetime(['2025-02-02','2025-02-03','2025-02-04']),
+            'target':['baixo','medio','alto']})
+        scenario=json.loads((ROOT/'configs/evaluation-plan.json').read_text())['cost_scenario']
+        before=evaluate_test_persistence(panel,history,scenario)
+        self.assertEqual(before['metrics']['rows'],3)
+        self.assertEqual(before['simulated_cost']['total'],400)
+        self.assertEqual(before['fallback_rows'],1)
+        self.assertFalse(before['test_used_for_selection'])
+        history.loc[2,'target']='baixo'
+        self.assertEqual(before,evaluate_test_persistence(panel,history,scenario))
+        self.assertEqual(len(before['cost_sensitivity']),12)
 
     def test_balance_selection_does_not_depend_on_validation_labels(self):
         from fire_risk.revision import tune_balance

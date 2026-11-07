@@ -104,7 +104,7 @@ def build(root=ROOT):
                    'intervalos: 72 (26/01 e 03/02). CSV não permite inferir tipos: leia id_municipio como texto para preservar zeros. '
                    '`fire_risk.submission.read_panel` preserva o código e converte datas; `verify_submission` verifica hashes e partições.', '',
                    'A base é derivada dos quatro arquivos fornecidos pelo curso, sem nomes de pessoas, credenciais ou registros individuais de detecção. '
-                   'Esta cópia acompanha a avaliação no repositório privado; não concede licença de redistribuição pública dos originais.']
+                   'Esta cópia acompanha a avaliação no repositório público; não concede licença de redistribuição pública dos originais.']
     (root / 'docs/data-dictionary.md').write_text('\n'.join(dictionary) + '\n', encoding='utf-8', newline='\n')
     export_evidence(folder, destination / 'evidence')
     files = [root / PANEL_FILE, root / 'docs/data-dictionary.md',

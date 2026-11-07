@@ -1,7 +1,7 @@
 {
   "status": "live",
   "provider": "render",
-  "verified_date": "2026-10-25",
+  "verified_date": "2026-11-06",
   "public_url": "https://mba-risco-incendios.onrender.com",
   "docs_url": "https://mba-risco-incendios.onrender.com/docs",
   "http_verified": true,
@@ -12,13 +12,17 @@
   "plan": "free",
   "auto_deploy": "off",
   "service_id": "srv-dbf994o473hc73caetb0",
-  "deploy_id": "dep-dbf9less728c73ek5qvg",
-  "deployed_commit": "f15f79870ac78286606eb2426d540f42064b55ac",
+  "deploy_id": "dep-dbn75du7bikc73ai8dv0",
+  "deployed_commit": "1401ccde81625996c0cec063b544407a428ccfc0",
   "branch": "main",
   "operational_use_validated": false,
   "calendar_boundary_invalid_statuses": [
     422,
     422,
     422
-  ]
+  ],
+  "extrapolation_warning_verified": true,
+  "known_input_warning": null,
+  "unknown_municipality_warning_verified": true,
+  "out_of_range_warning_verified": true
 }

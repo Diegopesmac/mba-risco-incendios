@@ -2,20 +2,20 @@
   "schema_version": 1,
   "path": "2",
   "data_source": "course",
-  "repository_visibility": "private",
+  "repository_visibility": "public",
   "deliveries": {
     "entrega0": {
       "status": "not_applicable"
     },
     "entrega1": {
-      "status": "prepared_not_submitted"
+      "status": "reviewed"
     },
     "entrega2": {
-      "status": "evaluated_not_submitted",
+      "status": "second_review_adjustments_pending",
       "test_evaluated": true
     }
   },
   "api_deploy": "public_http_verified",
   "api_url": "https://mba-risco-incendios.onrender.com",
-  "public_release": "not_authorized"
+  "public_release": "published"
 }

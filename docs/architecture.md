@@ -28,7 +28,7 @@ CSVs do curso → contrato/hash → preparação exploratória → painel rotula
 - `src/fire_risk/submission.py`: leitura e validação do painel entregue, dicionário e correlações restritas ao treino, sem dependência do treinamento.
 - `scripts/build_submission.py` e `submission_notebooks.py`: exportação e execução dos quatro notebooks com evidências congeladas; `package_submission.py`: ZIP da revisão Git.
 - `gerar_notebook_eda_queimadas.py`: entrada compatível que encaminha à geração canônica da entrega, sem recriar a exploração inicial obsoleta.
-- `submission/`: painel municipal derivado, evidências e manifesto necessários para reproduzir a apresentação acadêmica. Recorte privado definido na ADR 0003.
+- `submission/`: painel municipal derivado, evidências e manifesto necessários para reproduzir a apresentação acadêmica. Recorte acadêmico definido na ADR 0003.
 - `.local/`: dados, resultados, bancos, modelos e execuções não versionados.
 - `sources.py`, `coverage.py` e rotinas de base externa: ferramentas independentes, fora do fluxo ativo do curso.
 
@@ -38,4 +38,4 @@ Features, treinamento, avaliação e API recebem contratos explícitos. A API ca
 
 Python 3.12; pandas, NumPy, DuckDB, Matplotlib, SciPy e nbformat na preparação; scikit-learn/joblib no modelo; Optuna na busca; FastAPI/Uvicorn no serviço. `requirements-api.txt` separa dependências de inferência. A API importa o contrato de features do painel, sem executar preparação; por isso DuckDB também faz parte do ambiente de inferência. Nenhuma estatística aprendida usa o teste final. Os resultados registrados podem ser apresentados novamente sem reabrir a seleção.
 
-Revisão acadêmica: `revision.py` implementa persistência D−2 e comparação de pesos somente em desenvolvimento. O gerador usa IPython/inline para capturar saídas nativas; a lógica científica congelada permanece vinculada aos hashes originais.
+Revisão acadêmica: `revision.py` implementa persistência D−2, comparação de pesos somente em desenvolvimento e avaliação complementar da regra fixa no teste. O gerador usa IPython/inline para capturar saídas nativas; a lógica científica congelada permanece vinculada aos hashes originais.

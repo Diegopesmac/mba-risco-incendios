@@ -30,4 +30,4 @@ O painel não tem ausências. Índices inválidos, municípios/dias sem índice 
 
 Treino: 764 exemplos (03–25/01/2025); validação: 183 (27/01–02/02); teste: 310 (04–12/02); intervalos: 72 (26/01 e 03/02). CSV não permite inferir tipos: leia id_municipio como texto para preservar zeros. `fire_risk.submission.read_panel` preserva o código e converte datas; `verify_submission` verifica hashes e partições.
 
-A base é derivada dos quatro arquivos fornecidos pelo curso, sem nomes de pessoas, credenciais ou registros individuais de detecção. Esta cópia acompanha a avaliação no repositório privado; não concede licença de redistribuição pública dos originais.
+A base é derivada dos quatro arquivos fornecidos pelo curso, sem nomes de pessoas, credenciais ou registros individuais de detecção. Esta cópia acompanha a avaliação no repositório público; não concede licença de redistribuição pública dos originais.

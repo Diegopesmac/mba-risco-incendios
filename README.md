@@ -15,9 +15,9 @@ Os quatro notebooks abaixo estão executados, com tabelas e gráficos no própri
 3. [Comparação e otimização dos modelos](notebooks/course/03_painel_modelos_curso.ipynb).
 4. [Avaliação final, responsabilidade e API](notebooks/04_projeto_final_curso.ipynb).
 
-A [base consolidada de 1.329 linhas](submission/painel_modelagem.csv) e o [dicionário das 17 colunas](docs/data-dictionary.md) acompanham a entrega. `submission/manifest.json` vincula a base e as evidências por hash. Os CSVs originais e os modelos binários não são redistribuídos. Esta cópia do painel destina-se à avaliação no repositório privado.
+A [base consolidada de 1.329 linhas](submission/painel_modelagem.csv) e o [dicionário das 17 colunas](docs/data-dictionary.md) acompanham a entrega. `submission/manifest.json` vincula a base e as evidências por hash. Os CSVs originais e os modelos binários não são redistribuídos. Esta cópia do painel destina-se à avaliação no repositório público; os CSVs originais continuam excluídos.
 
-Para executar a apresentação, instale as dependências abaixo e abra os notebooks em qualquer pasta dentro do clone ou ZIP extraído. Eles usam somente o painel e as evidências incluídas, sem as pastas da máquina original, dados brutos. O notebook 03 reproduz ajuste em desenvolvimento e compara persistência e pesos de classe; a avaliação final continua sendo o registro congelado. A correlação complementar usa somente o treino e não modifica o modelo escolhido.
+Para executar a apresentação, instale as dependências abaixo e abra os notebooks em qualquer pasta dentro do clone ou ZIP extraído. Eles usam somente o painel e as evidências incluídas, sem as pastas da máquina original, dados brutos. O notebook 03 reproduz ajuste em desenvolvimento e compara persistência e pesos de classe; o notebook 04 acrescenta a persistência no teste, ao lado dos resultados congelados do modelo e do Dummy, com métricas e custos comparáveis. A correlação complementar usa somente o treino e não modifica o modelo escolhido.
 
 ```sh
 python -m pip install -r requirements.txt
@@ -38,6 +38,7 @@ python scripts/build_course_panel.py --raw-dir <pasta-dos-quatro-csvs>
 python scripts/benchmark_course.py
 python scripts/optimize_course.py
 python scripts/finalize_course.py
+python scripts/build_revision.py --raw-dir <pasta-dos-quatro-csvs>
 python scripts/build_submission.py
 python -m unittest discover -s tests -v
 python -m unittest test_preparacao_queimadas -v
@@ -46,7 +47,7 @@ python scripts/check_publication.py
 
 Manifesto, bancos e derivados ficam em `.local/course/`. A preparação confirma duplicatas por igualdade exata, reserva horários divergentes, preserva ausências e distingue precipitação parcial de 24 horas completas. As rotinas e os notebooks em `notebooks/course/` contêm auditoria e EDA dos quatro arquivos.
 
-A reconstrução completa é destinada a um ambiente novo com os quatro CSVs. No checkout da avaliação já congelada, `build_submission.py` reapresenta a avaliação final e executa comparações complementares somente em desenvolvimento; não apague o congelamento nem execute nova otimização. Para compor o ZIP da revisão Git já conferida, use `python scripts/package_submission.py`.
+A reconstrução completa é destinada a um ambiente novo com os quatro CSVs. No checkout da avaliação já congelada, `build_submission.py` reapresenta a avaliação final e executa as comparações de desenvolvimento e a avaliação da regra fixa de persistência no teste; não apague o congelamento nem execute nova otimização. Para compor o ZIP da revisão Git já conferida, use `python scripts/package_submission.py`.
 
 Se a reconstrução ainda não tiver registro local de publicação, a entrega registra `not_deployed` e `http_verified=false`. Isso não reutiliza a evidência da API do modelo anterior nem exige publicar um novo serviço para gerar os notebooks.
 
@@ -70,14 +71,18 @@ A investigação de base externa do Caminho 4 foi encerrada com a adoção dos d
 
 ## Estado e limites
 
-Preparação, comparação de três famílias, otimização temporal, avaliação final congelada, explicabilidade, análise por grupos e custos simulados executados. O modelo final obteve F1 macro 0,4097 e recall alto 0,5690 no teste temporal de 310 exemplos. API publicada no Render e verificada por HTTP em 25/10/2026: saúde 200, previsão 200 e entrada inválida 422, com o modelo final `852606b93da31ade`. Entrega 0 não aplicável aos dados do curso; entregas 1 e 2 ainda não submetidas.
+Preparação, comparação de três famílias, otimização temporal, avaliação final congelada, explicabilidade, análise por grupos e custos simulados executados. O modelo final obteve F1 macro 0,4097 e recall alto 0,5690 no teste temporal de 310 exemplos. API publicada no Render e atualizada para o commit 1401ccd e verificada por HTTP em 06/11/2026: saúde 200, previsão 200 e entrada inválida 422, com o modelo final `852606b93da31ade`. Entrega 0 não aplicável aos dados do curso; projeto devolvido na segunda revisão com aprovação condicionada aos ajustes finais de baseline no teste e atualização da API; aprovação definitiva ainda não registrada.
 
 Os comandos de otimização devem ser executados antes de congelar a avaliação. Depois de existir `final/freeze.json`, nova otimização é bloqueada; a avaliação final reutiliza seu resultado registrado. Não apagar os registros para ajustar escolhas depois de observar o teste.
 
 Meteorologia e queimadas têm apenas 43 dias de sobreposição. O significado das 28 classes MapBiomas não é inferido da legenda incompatível do material. Variáveis obtidas na detecção futura ou no fim do dia previsto não entram como features. O trabalho não é um serviço oficial de alerta.
 
-Repositório privado. O painel derivado e os notebooks executados integram a entrega acadêmica. Abertura pública, licença, redistribuição dos originais e alteração do serviço exigem revisão própria.
+Repositório público. O painel derivado e os notebooks executados integram a entrega acadêmica. A publicação não concede licença de redistribuição dos CSVs originais.
 
-Revisão do tutor: persistência D−2 no histórico completo de detecções válidas obteve F1 macro 0,5301 na validação, acima de 0,4528 da logística otimizada. Pesos balanceados ajudam frente aos uniformes, mas não eliminam essa diferença. A otimização não demonstrou ganho relevante. Os notebooks mostram a comparação executável e os limites; a API acrescenta aviso explícito de extrapolação, ainda sujeito a implantação.
+Revisão do tutor: persistência D−2 no histórico completo de detecções válidas obteve F1 macro 0,5301 na validação, acima de 0,4528 da logística otimizada. Pesos balanceados ajudam frente aos uniformes, mas não eliminam essa diferença. A otimização não demonstrou ganho relevante. Os notebooks mostram a comparação executável e os limites; a API acrescenta aviso explícito de extrapolação, verificado no serviço público em 06/11/2026.
 
 A revisão treina um candidato com intensidade dos pesos escolhida em CV cronológica do treino. Entre potências 0, 0,5, 1 e 1,5, foi selecionada 1: os pesos balanceados existentes já eram a melhor opção dessa comparação. O ajuste foi executado, mas não produziu ganho adicional. Persistência permanece superior; não se afirma que o declínio temporal foi resolvido.
+
+A decisão estudada é classificar a intensidade do índice entre município/dias com detecção observada. Essa condição não é conhecida antecipadamente; o protótipo não valida emissão de alertas para a população geral de municípios nem previsão de ocorrência de fogo.
+
+No teste de 310 exemplos, a regra fixa de persistência obteve F1 macro 0,4966 contra 0,4097 do modelo. Custos fictícios: persistência R$ 5.240, modelo R$ 5.930, Dummy R$ 13.150. A vantagem frente ao Dummy não comprova economia frente à persistência; o notebook 04 compara as três alternativas e os doze cenários de custo.
