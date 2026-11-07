@@ -32,7 +32,7 @@ Resultados por prefixo de UF, semana e cobertura de estações acompanham contag
 
 ## Valor e acompanhamento
 
-Matriz fictícia de penalidades, definida antes do teste: custo simulado total de R$ 5.930 contra R$ 13.150 da referência em 310 decisões sobre o índice. São valores hipotéticos, não economia real ou incêndios evitados. Doze cenários variam penalidades de subestimação e excesso de alerta. O [plano A/B](ab-plan.md) descreve experimento futuro em modo sombra, ainda não executado.
+Matriz fictícia de penalidades, definida antes do teste: em 310 decisões, custo simulado total de R$ 5.930 para o modelo, R$ 13.150 para o Dummy e R$ 5.240 para a persistência D−2. O modelo custa R$ 690 a mais que a persistência neste cenário: a vantagem sobre o Dummy não sustenta economia frente ao baseline mais forte. São valores hipotéticos, não economia real ou incêndios evitados. Os doze cenários comparam as três alternativas usando as mesmas penalidades. O [plano A/B](ab-plan.md) descreve experimento futuro em modo sombra, ainda não executado.
 
 A API sinaliza valores fora das faixas de desenvolvimento e municípios novos, sem tornar essas previsões validadas. Atualizações exigem novo protocolo de desenvolvimento e teste independente. Fontes e população devem ser revistas antes de qualquer extensão operacional.
 
@@ -42,6 +42,6 @@ Na validação comum de 183 exemplos, persistência da última classe do municí
 
 A logística sem pesos obteve 0,3813 e com pesos balanceados, 0,4429. O balanceamento já existia e melhora essa comparação, mas não resolve a mudança temporal: alto passa de 31,7% no treino para 17,5% na validação. Teste mantém sua distribuição original. O ganho de otimização (~0,010) não demonstrou relevância ou estabilidade. Não há evidência de superioridade do modelo sobre persistência.
 
-Análise complementar posterior ao feedback, restrita ao desenvolvimento, sem promoção de outro modelo nem nova seleção pelo teste observado. Uma promoção exige avaliação independente. Notebook 03 executa essas comparações; notebook 04 preserva o resultado histórico.
+O notebook 03 mantém a análise de desenvolvimento. Após a segunda revisão, o notebook 04 avalia também a regra fixa de persistência nos mesmos 310 exemplos do teste: F1 macro 0,4966, contra 0,4097 do modelo. O histórico inclui datas do teste somente quando anteriores ao corte D−2 da previsão; disponibilidade dos rótulos continua assumida. Não há retreinamento, promoção ou nova seleção pelo teste. Modelo, Dummy e suas evidências congeladas são preservados; a comparação adicional está em `persistence-test.json`.
 
 A revisão treina um candidato com intensidade dos pesos escolhida em CV cronológica do treino. Entre potências 0, 0,5, 1 e 1,5, foi selecionada 1: os pesos balanceados existentes já eram a melhor opção dessa comparação. O ajuste foi executado, mas não produziu ganho adicional. Persistência permanece superior; não se afirma que o declínio temporal foi resolvido.

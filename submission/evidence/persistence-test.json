@@ -1,0 +1,200 @@
+{
+  "metrics": {
+    "rows": 310,
+    "accuracy": 0.7387096774193549,
+    "f1_macro": 0.4965640400465494,
+    "recall_alto": 0.6551724137931034,
+    "precision_macro": 0.48349844331617325,
+    "recall_macro": 0.5157196616988543,
+    "classification_report": {
+      "baixo": {
+        "precision": 0.8597285067873304,
+        "recall": 0.8597285067873304,
+        "f1-score": 0.8597285067873304,
+        "support": 221.0
+      },
+      "medio": {
+        "precision": 0.05555555555555555,
+        "recall": 0.03225806451612903,
+        "f1-score": 0.04081632653061224,
+        "support": 31.0
+      },
+      "alto": {
+        "precision": 0.5352112676056338,
+        "recall": 0.6551724137931034,
+        "f1-score": 0.5891472868217055,
+        "support": 58.0
+      },
+      "accuracy": 0.7387096774193549,
+      "macro avg": {
+        "precision": 0.48349844331617325,
+        "recall": 0.5157196616988543,
+        "f1-score": 0.4965640400465494,
+        "support": 310.0
+      },
+      "weighted avg": {
+        "precision": 0.7185950830430612,
+        "recall": 0.7387096774193549,
+        "f1-score": 0.7272124153487352,
+        "support": 310.0
+      }
+    },
+    "confusion_labels": [
+      "baixo",
+      "medio",
+      "alto"
+    ],
+    "confusion_matrix": [
+      [
+        190,
+        13,
+        18
+      ],
+      [
+        15,
+        1,
+        15
+      ],
+      [
+        16,
+        4,
+        38
+      ]
+    ],
+    "auc_ovr_macro": null
+  },
+  "simulated_cost": {
+    "total": 5240.0,
+    "per_decision": 16.903225806451612,
+    "currency": "BRL",
+    "kind": "fictional_academic_simulation"
+  },
+  "cost_sensitivity": [
+    {
+      "missed_high_multiplier": 0.5,
+      "overalert_multiplier": 0.5,
+      "persistence": {
+        "total": 2995.0,
+        "per_decision": 9.661290322580646,
+        "currency": "BRL",
+        "kind": "fictional_academic_simulation"
+      }
+    },
+    {
+      "missed_high_multiplier": 0.5,
+      "overalert_multiplier": 1,
+      "persistence": {
+        "total": 3480.0,
+        "per_decision": 11.225806451612904,
+        "currency": "BRL",
+        "kind": "fictional_academic_simulation"
+      }
+    },
+    {
+      "missed_high_multiplier": 0.5,
+      "overalert_multiplier": 2,
+      "persistence": {
+        "total": 4450.0,
+        "per_decision": 14.35483870967742,
+        "currency": "BRL",
+        "kind": "fictional_academic_simulation"
+      }
+    },
+    {
+      "missed_high_multiplier": 1,
+      "overalert_multiplier": 0.5,
+      "persistence": {
+        "total": 4755.0,
+        "per_decision": 15.338709677419354,
+        "currency": "BRL",
+        "kind": "fictional_academic_simulation"
+      }
+    },
+    {
+      "missed_high_multiplier": 1,
+      "overalert_multiplier": 1,
+      "persistence": {
+        "total": 5240.0,
+        "per_decision": 16.903225806451612,
+        "currency": "BRL",
+        "kind": "fictional_academic_simulation"
+      }
+    },
+    {
+      "missed_high_multiplier": 1,
+      "overalert_multiplier": 2,
+      "persistence": {
+        "total": 6210.0,
+        "per_decision": 20.032258064516128,
+        "currency": "BRL",
+        "kind": "fictional_academic_simulation"
+      }
+    },
+    {
+      "missed_high_multiplier": 2,
+      "overalert_multiplier": 0.5,
+      "persistence": {
+        "total": 8275.0,
+        "per_decision": 26.693548387096776,
+        "currency": "BRL",
+        "kind": "fictional_academic_simulation"
+      }
+    },
+    {
+      "missed_high_multiplier": 2,
+      "overalert_multiplier": 1,
+      "persistence": {
+        "total": 8760.0,
+        "per_decision": 28.258064516129032,
+        "currency": "BRL",
+        "kind": "fictional_academic_simulation"
+      }
+    },
+    {
+      "missed_high_multiplier": 2,
+      "overalert_multiplier": 2,
+      "persistence": {
+        "total": 9730.0,
+        "per_decision": 31.387096774193548,
+        "currency": "BRL",
+        "kind": "fictional_academic_simulation"
+      }
+    },
+    {
+      "missed_high_multiplier": 4,
+      "overalert_multiplier": 0.5,
+      "persistence": {
+        "total": 15315.0,
+        "per_decision": 49.403225806451616,
+        "currency": "BRL",
+        "kind": "fictional_academic_simulation"
+      }
+    },
+    {
+      "missed_high_multiplier": 4,
+      "overalert_multiplier": 1,
+      "persistence": {
+        "total": 15800.0,
+        "per_decision": 50.96774193548387,
+        "currency": "BRL",
+        "kind": "fictional_academic_simulation"
+      }
+    },
+    {
+      "missed_high_multiplier": 4,
+      "overalert_multiplier": 2,
+      "persistence": {
+        "total": 16770.0,
+        "per_decision": 54.096774193548384,
+        "currency": "BRL",
+        "kind": "fictional_academic_simulation"
+      }
+    }
+  ],
+  "fallback_class": "baixo",
+  "fallback_rows": 0,
+  "test_used_for_selection": false,
+  "protocol": "Regra D−2 fixa, avaliação complementar; sem seleção ou retreinamento. Disponibilidade histórica assumida.",
+  "source_sha256": "1ba34802bce6fadcac1f3e6d4bd4c2caeea303de82001b461e6944bd6fbd49be",
+  "history_rows": 16666
+}

@@ -1,6 +1,6 @@
 # ADR 0003 — artefatos da entrega acadêmica
 
-Status: aceito para o repositório privado de avaliação.
+Status: aceito para o repositório público de avaliação.
 
 O enunciado pede notebooks com resultados, base consolidada, dicionário e EDA do alvo no GitHub. A entrega inclui os quatro notebooks executados nos caminhos canônicos, o painel municipal derivado em `submission/painel_modelagem.csv`, o dicionário de todas as colunas e evidências sem modelos binários. Os CSVs originais não são redistribuídos.
 
@@ -14,4 +14,4 @@ A apresentação é reproduzível desde o clone ou ZIP sem a organização de di
 
 Revisão do tutor: gráficos e tabelas usam execução IPython e backend inline nativos. Comparações complementares vivem em revision.py, sem alterar o código vinculado ao congelamento. Novos resultados de desenvolvimento não promovem automaticamente um modelo.
 
-Os arquivos .ipynb são agora a fonte canônica editável; submission_notebooks.py é somente um leitor de compatibilidade, sem código em strings. build_submission.py executa os notebooks existentes. label-history.json contém somente agregados município/dia anteriores ao teste, extraídos de todas as detecções válidas, incluindo as sem meteorologia elegível; o manifesto vincula os bytes da entrega.
+Os arquivos .ipynb são agora a fonte canônica editável; submission_notebooks.py é somente um leitor de compatibilidade, sem código em strings. build_submission.py executa os notebooks existentes. label-history.json contém somente agregados município/dia anteriores ao teste; label-history-test.json estende o histórico até o último dia necessário (D−2) para a avaliação complementar, extraídos de todas as detecções válidas, incluindo as sem meteorologia elegível; o manifesto vincula os bytes da entrega.

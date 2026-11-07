@@ -50,7 +50,7 @@ def development_review(panel, history=None):
             'protocol': 'análise complementar após feedback; teste original já observado; sem promoção de modelo'}
 
 
-def build_label_history(fire_path):
+def build_label_history(fire_path, end_date='2025-02-02'):
     """Mediana diária de todos os índices válidos, antes de juntar meteorologia."""
     import duckdb
     from .panel import risk_class
@@ -60,13 +60,36 @@ def build_label_history(fire_path):
             median(try_cast(risco_fogo AS DOUBLE)) AS target_index
             FROM read_csv(?, header=true, delim=';', all_varchar=true)
             WHERE regexp_full_match(id_municipio, '[0-9]{7}')
-              AND try_cast(data_hora AS TIMESTAMP)::DATE <= DATE '2025-02-02'
+              AND try_cast(data_hora AS TIMESTAMP)::DATE <= CAST(? AS DATE)
               AND isfinite(try_cast(risco_fogo AS DOUBLE))
               AND try_cast(risco_fogo AS DOUBLE) BETWEEN 0 AND 1
-            GROUP BY ALL ORDER BY data,id_municipio""", [str(fire_path)]).df()
+            GROUP BY ALL ORDER BY data,id_municipio""", [str(fire_path), str(pd.Timestamp(end_date).date())]).df()
     frame['data'] = pd.to_datetime(frame['data'])
     frame['target'] = frame['target_index'].map(risk_class)
     return frame[['id_municipio', 'data', 'target']]
+
+
+def evaluate_test_persistence(panel, history, scenario):
+    """Avalia a regra fixa no teste, sem ajustar modelo, pesos ou limiares."""
+    from .assessment import simulated_cost
+    train = panel.loc[panel['split'].eq('train')]
+    test = panel.loc[panel['split'].eq('test')]
+    if train.empty or test.empty or train['data'].max() >= test['data'].min():
+        raise ValueError('Treino e teste temporal válidos são obrigatórios.')
+    fallback = train['target'].value_counts().idxmax()
+    predictions = persistence(history, test, fallback)
+    actual, predicted = test['target'], predictions['predicted']
+    sensitivity = []
+    for missed in scenario['missed_high_multipliers']:
+        for alert in scenario['overalert_multipliers']:
+            sensitivity.append({'missed_high_multiplier': missed, 'overalert_multiplier': alert,
+                'persistence': simulated_cost(actual, predicted, scenario, missed, alert)})
+    return {'metrics': prediction_metrics(actual, predicted),
+            'simulated_cost': simulated_cost(actual, predicted, scenario),
+            'cost_sensitivity': sensitivity, 'fallback_class': fallback,
+            'fallback_rows': int(predictions['fallback_used'].sum()),
+            'test_used_for_selection': False,
+            'protocol': 'Regra D−2 fixa, avaliação complementar; sem seleção ou retreinamento. Disponibilidade histórica assumida.'}
 
 
 def tune_balance(train, validation):
